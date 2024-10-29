@@ -47,35 +47,33 @@ const Cat: React.FC = () => {
     <div className="container mx-auto p-6 bg-color_1 rounded-b-2xl">
       <div className="flex mb-6">
         <div className="w-1/4 bg-color_2 rounded-lg p-4 mr-3">
-          <img
-            src={cat.avatar}
-            alt={cat.name}
-            className="w-full max-h-64 rounded-full shadow-lg mb-4 mr-2 bg-color_1"
-          />
+          <div className="relative flex justify-center mb-4">
+            <img
+              src={cat.avatar}
+              alt={cat.name}
+              className="w-auto max-h-96 object-cover rounded-full"
+            />
+          </div>
           <div>
             <h3 className="text-2xl font-semibold mb-2">{cat.name}</h3>
             <p>
               <strong>Mood:</strong> {cat.mood}
             </p>
             <p>
-              <strong>Info 1:</strong> {cat.mood}
-            </p>
-            <p>
-              <strong>Info 2:</strong> {cat.mood}
-            </p>
-            <p>
-              <strong>Info 3:</strong> {cat.mood}
+              <strong>Patience:</strong> {cat.patience}
             </p>
           </div>
         </div>
 
         <div className="w-3/4">
           {/* Current main image */}
-          <img
-            src={currentNook}
-            alt="Cat Nook"
-            className="w-full max-h-64 rounded-lg shadow-lg"
-          />
+          <div className="flex justify-center">
+            <img
+              src={currentNook}
+              alt="Cat Nook"
+              className="w-1/2 max-h-96 rounded-lg shadow-lg"
+            />
+          </div>
 
           {/* Carousel of thumbnails */}
           <div className="mt-4 flex space-x-2 overflow-x-auto scrollbar-thin scrollbar-thumb-color_3 scrollbar-track-color_2">
