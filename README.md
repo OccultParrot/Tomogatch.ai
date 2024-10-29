@@ -113,24 +113,46 @@ Tomogatch.ai/
 
 This project is a collaborative effort by the following contributors:
 
-- **Dario**
-
-  - GitHub Profile: [GitHub Profile](#)
-  - Email: [dario@example.com](mailto:dario@example.com)
-
-- **Souad**
-
-  - GitHub Profile: [souad-hb](#)
-  - Email: [souadsalahh@gmail.com](mailto:souadsalahh@gmail.com)
-
-- **Thomas**
-
-  - GitHub Profile: [GitHub Profile](#)
-  - Email: [thomas@example.com](mailto:thomas@example.com)
-
-- **Greg**
-  - GitHub Profile: [savevsgames](https://github.com/savevsgames)
-  - Email: [greg@example.com](gregcbarker@gmail.com)
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/[NAME_HERE]">
+        <img src="https://github.com/[NAME_HERE].png?size=100" width="100px;" alt="[NAME_HERE]'s Avatar"/>
+        <br />
+        <sub><b>Dario</b></sub>
+      </a>
+      <br />
+      <a href="mailto:dario@example.com">dario@example.com</a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/souad-hb">
+        <img src="https://github.com/souad-hb.png?size=100" width="100px;" alt="souad-hb's Avatar"/>
+        <br />
+        <sub><b>Souad</b></sub>
+      </a>
+      <br />
+      <a href="mailto:souadsalahh@gmail.com">souadsalahh@gmail.com</a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/OccultParrot">
+        <img src="https://github.com/OccultParrot.png?size=100" width="100px;" alt="OccultParrot's Avatar"/>
+        <br />
+        <sub><b>Thomas</b></sub>
+      </a>
+      <br />
+      <a href="mailto:stemlertho@gmail.com">stemlertho@gmail.com</a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/savevsgames">
+        <img src="https://github.com/savevsgames.png?size=100" width="100px;" alt="savevsgames's Avatar"/>
+        <br />
+        <sub><b>Greg</b></sub>
+      </a>
+      <br />
+      <a href="mailto:gregcbarker@gmail.com">gregcbarker@gmail.com</a>
+    </td>
+  </tr>
+</table>
 
 ---
 
