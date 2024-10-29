@@ -117,13 +117,13 @@ This project is a collaborative effort by the following contributors:
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/[NAME_HERE]">
-        <img src="https://github.com/[NAME_HERE].png?size=100" width="100px;" alt="[NAME_HERE]'s Avatar"/>
+      <a href="https://github.com/DarioJZB">
+        <img src="https://github.com/DarioJZB.png?size=100" width="100px;" alt="[NAME_HERE]'s Avatar"/>
         <br />
         <sub><b>Dario</b></sub>
       </a>
       <br />
-      <a href="mailto:dario@example.com">dario@example.com</a>
+      <a href="mailto:dariojab87@gmail.com">dariojzb87@gmail.com</a>
     </td>
     <td align="center">
       <a href="https://github.com/souad-hb">
