@@ -27,6 +27,43 @@ export default function Chat() {
   const [catData, setCatData] = useState(selectedCat || null);
   const [interaction, setInteraction] = useState<InteractionData | null>(null);
   const [interactions, setInteractions] = useState<InteractionData[]>([]);
+  const [catMoodPics] = useState(() => {
+    const catNames = {
+      whiskers: 1,
+      bubbles: 2,
+      shadow: 3,
+      mittens: 4
+    }
+    const name = selectedCat?.name as keyof typeof catNames | undefined;
+    const number = name ? catNames[name] : undefined;
+
+    let moodPicArr = [
+      `/assets/cats/cat-0${number}/mood-12.png`,
+      `/assets/cats/cat-0${number}/mood-34.png`,
+      `/assets/cats/cat-0${number}/mood-56.png`,
+      `/assets/cats/cat-0${number}/mood-78.png`,
+      `/assets/cats/cat-0${number}/mood-910.png`,
+    ]
+    
+    return moodPicArr;
+  }) ;
+
+  const getMoodImage = (mood: number) => {
+    if (mood === 1 || mood === 2) {
+      return catMoodPics[0];
+    } else if (mood === 3 || mood === 4) {
+      return catMoodPics[1];
+    } else if (mood === 5 || mood === 6) {
+      return catMoodPics[2];
+    } else if (mood === 7 || mood === 8) {
+      return catMoodPics[3];
+    } else if (mood === 9 || mood === 10) {
+      return catMoodPics[4];
+    } else {
+      return undefined; 
+    }
+  };
+
 
   const nookPic = selectedNook;
   const userId = getUserIdFromToken();
@@ -214,10 +251,9 @@ export default function Chat() {
         // setCatData((prev) => ({
         //   ...prev,
         //   mood: newMood,
-        //   patience: newPatience,
-        //   avatar: based on mood will change to new one
+        //   avatar: getMoodImage(newMood),
         // })); // Update the cat data with the new mood and patience
-        // could have a catAvatar, setCatAvatar = useState and inject it from there
+        // // could have a catAvatar, setCatAvatar = useState and inject it from there
       } catch (error) {
         console.error("Error during chat interaction:", error);
       }

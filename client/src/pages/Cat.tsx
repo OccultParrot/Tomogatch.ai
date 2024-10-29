@@ -82,7 +82,7 @@ const Cat: React.FC = () => {
                 key={index}
                 src={image}
                 alt={`Nook ${index + 1}`}
-                className="w-24 h-24 rounded-md cursor-pointer hover: border-2 border-color_5 transition-colors"
+                className="w-24 h-24 rounded-md cursor-pointer hover:border-2 border-color_5 transition-colors"
                 onClick={() => setCurrentNook(image)}
               />
             ))}

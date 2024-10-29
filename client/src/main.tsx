@@ -3,13 +3,17 @@ import { createRoot } from 'react-dom/client';
 import {BrowserRouter, } from 'react-router-dom';
 import App from './App.tsx';
 import '/src/index.css';
+import { HistoryProvider } from './context/HistoryContext.tsx';
 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {/*<RouterProvider router={router} />*/}
+
     <BrowserRouter>
+    <HistoryProvider>
       <App />
+      </HistoryProvider>
     </BrowserRouter>
   </StrictMode>,
 );

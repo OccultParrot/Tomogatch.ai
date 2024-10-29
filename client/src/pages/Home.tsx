@@ -43,7 +43,7 @@ const Home: React.FC = () => {
       if (!adoptableResponse.ok) {
         throw new Error("Failed to fetch adoptable cats");
       }
-
+ 
       const adoptable = await adoptableResponse.json();
       setAdoptableCats(adoptable);
       console.log("Fetched adoptable cats:", adoptable);
