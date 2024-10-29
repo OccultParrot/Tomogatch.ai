@@ -14,6 +14,8 @@ import { NookProvider } from "./context/NookContext.tsx";
 import { CatProvider } from "./context/CatContext.tsx";
 import { LoggedInProvider } from "./context/LoggedInContext.tsx";
 
+import { UserProvider } from "./context/UserContext.tsx";
+
 function Layout() {
   return (
     <LoggedInProvider>
@@ -36,19 +38,21 @@ function Layout() {
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route key="LandingPage" index element={<Landing />} />
-        <Route key="SignUp" path="signup" element={<Signup />} />
-        <Route key-="Login" path="login" element={<Login />} />
-        <Route key-="Chat" path="/Chat" element={<Chat />} />
-        <Route key="Home" path="home" element={<Home />} />{" "}
-        {/* Page that shows all your cats */}
-        <Route key-="Profile" path="profile" element={<Profile />} />
-        <Route key-="Cat" path="/:catName" element={<Cat />} />
-        <Route key-="Error" path="*" element={<Error />} />
-      </Route>
-    </Routes>
+    <UserProvider>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route key="LandingPage" index element={<Landing />} />
+          <Route key="SignUp" path="signup" element={<Signup />} />
+          <Route key-="Login" path="login" element={<Login />} />
+          <Route key-="Chat" path="/Chat" element={<Chat />} />
+          <Route key="Home" path="home" element={<Home />} />{" "}
+          {/* Page that shows all your cats */}
+          <Route key-="Profile" path="profile" element={<Profile />} />
+          <Route key-="Cat" path="/:catName" element={<Cat />} />
+          <Route key-="Error" path="*" element={<Error />} />
+        </Route>
+      </Routes>
+    </UserProvider>
   );
 }
 

@@ -1,40 +1,42 @@
-import { JwtPayload, jwtDecode } from "jwt-decode";
+import { JwtPayload as DefaultJwtPayload, jwtDecode } from "jwt-decode";
+
+// Extend the default JwtPayload to include custom fields like username and id
+interface CustomJwtPayload extends DefaultJwtPayload {
+  username: string;
+  id: number;
+}
 
 class AuthService {
   getProfile() {
-    // get the decoded token
-    const decoded: JwtPayload = jwtDecode(this.getToken());
+    const token = this.getToken();
+    if (!token) throw new Error("No token found");
+
+    // Decode the token with the extended type
+    const decoded: CustomJwtPayload = jwtDecode<CustomJwtPayload>(token);
     return decoded;
   }
-  
+
   loggedIn() {
     const token = this.getToken();
-    console.log("hi", !!token);
-    return !!token;
+    return !!token && !this.isTokenExpired(token);
   }
 
   isTokenExpired(token: string) {
-    const decoded: JwtPayload = jwtDecode(token);
-    if (decoded.exp) {
-      const currentTime = Math.floor(Date.now() / 1000);
-      return decoded.exp < currentTime;
-    }
-    return false;
+    const decoded: CustomJwtPayload = jwtDecode<CustomJwtPayload>(token);
+    const currentTime = Math.floor(Date.now() / 1000);
+    return decoded.exp ? decoded.exp < currentTime : false;
   }
 
   getToken(): string {
-    const loggedUser = localStorage.getItem("id_token") || "";
-    return loggedUser;
+    return localStorage.getItem("id_token") || "";
   }
 
-  login(Token: string) {
-    localStorage.setItem("id_token", Token);
-    // window.location.assign(`/home`);
+  login(token: string) {
+    localStorage.setItem("id_token", token);
   }
 
   logout() {
     localStorage.removeItem("id_token");
-    // window.location.assign("/");
   }
 }
 

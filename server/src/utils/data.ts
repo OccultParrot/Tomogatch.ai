@@ -2,7 +2,7 @@
 const cats = [
   {
     name: "Whiskers",
-    avatar: "./assets/cats/chat-01.png",
+    avatar: "./assets/cats/cat-01/chat-01.png",
     skin: "orange",
     personality: "curious/funny",
     mood: 5,
@@ -12,7 +12,7 @@ const cats = [
   },
   {
     name: "Bubbles",
-    avatar: "./assets/cats/chat-01.png",
+    avatar: "./assets/cats/cat-02/chat-01.png",
     skin: "light brown",
     personality: "excited/bubbly",
     mood: 5,
@@ -22,7 +22,7 @@ const cats = [
   },
   {
     name: "Shadow",
-    avatar: "./assets/cats/chat-01.png",
+    avatar: "./assets/cats/cat-03/chat-01.png",
     skin: "black",
     personality: "quiet/mysterious",
     mood: 5,
@@ -32,7 +32,7 @@ const cats = [
   },
   {
     name: "Mittens",
-    avatar: "./assets/cats/chat-01.png",
+    avatar: "./assets/cats/cat-04/chat-01.png",
     skin: "brown",
     personality: "affectionate/easygoing",
     mood: 5,

@@ -1,23 +1,37 @@
-import React, { useState } from "react"; //useEffect
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react"; // added useEffect
+import { useNavigate, useLocation } from "react-router-dom"; // Added useLocation here
 import { useCatContext } from "../context/CatContext";
 import { useNookContext } from "../context/NookContext";
 
 const Cat: React.FC = () => {
-  const { selectedCat: cat } = useCatContext();
+  const { selectedCat } = useCatContext(); // Include setSelectedCat
+  const location = useLocation(); // Access the state passed via navigation
   const navigate = useNavigate();
+
+  // Try to use the context first; fallback to state passed via navigation
+  const cat = selectedCat || location.state?.cat;
   const random = Math.ceil((Math.random() * 12) % 12);
   const [currentNook, setCurrentNook] = useState(
     `/assets/nooks/nook${random}.png`
   );
   const { setSelectedNook } = useNookContext();
   setSelectedNook(currentNook);
+  // Set selected nook on component mount - this had to be done in proper react hook order
+  useEffect(() => {
+    setSelectedNook(currentNook);
+  }, [currentNook, setSelectedNook]);
 
-  if (!cat) {
-    return <p>no cat found</p>;
-  }
+  // If no cat is found, navigate back to the home page whenever the cat or location changes
+  useEffect(() => {
+    if (!cat) {
+      console.warn("No cat found, navigating back to home.");
+      navigate("/home");
+    }
+  }, [cat, navigate]);
 
-  let carouselNook = [];
+  if (!cat) return null; // Prevent the render of the component if no cat is found
+
+  const carouselNook = [];
 
   for (let i = 0; i < 12; i++) {
     carouselNook[i] = `/assets/nooks/nook${i + 1}.png`;
@@ -25,6 +39,7 @@ const Cat: React.FC = () => {
 
   const handleChatClick = () => {
     // const catName = cat.name.toLowerCase();
+    // setSelectedCat(cat); // Might not be necessary because setSelectedCat is already called in the context from home when the cat is selected
     navigate(`/Chat`, { state: { cat } });
   };
 

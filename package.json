@@ -9,8 +9,8 @@
     "server": "cd server && npm run start",
     "client:build": "cd client && npm run build",
     "client:dev": "cd client && npm run dev",
-    "render:build": "npm i && cd client && npm run build && cd ../server && npm run build",
-    "render:start": "npm run client:build && npm run server"
+    "render:build": "npm install && cd client && npm run build && cd ../server && npm run build",
+    "render:start": "npm run render:build && npm run server"
   },
   "keywords": [],
   "author": "",

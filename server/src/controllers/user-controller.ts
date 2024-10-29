@@ -29,10 +29,16 @@ export const getAdoptableCats = async (
       },
     });
 
+    // Get the user's cats as an array of cat names
+    const usersAdoptedCatNames = usersAdoptedCatArray.map((cat) => cat.name);
+
     // Filter out the cats already adopted by this user => by the cat name
-    const availableCats = adoptableCats;
-    console.log("availableCats", availableCats);
-    console.log("usersAdoptedCatArray", usersAdoptedCatArray);
+    const availableCats = adoptableCats.filter((cat) => {
+      return !usersAdoptedCatNames.includes(cat.name);
+    });
+
+    // console.log("availableCats", availableCats);
+    // console.log("usersAdoptedCatArray", usersAdoptedCatArray);
 
     // Respond with the available cats
     res.status(200).json(availableCats);

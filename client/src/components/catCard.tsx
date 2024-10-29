@@ -16,7 +16,8 @@ const CatCard: React.FC<CatCardProps> = ({ cat, isAvailable, onClick }) => {
       <img
         src={cat.avatar || "./assets/other/adoptMe.png"}
         alt={cat.name}
-        className="w-30 h-30 object-cover rounded-md mb-2"
+        className="object-cover rounded-md mb-2"
+        style={{ width: "auto", maxWidth: "30%", height: "auto" }}
       />
       <h3 className="text-xl font-semibold">{cat.name}</h3>
 

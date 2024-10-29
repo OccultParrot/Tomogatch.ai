@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SignUpData } from "../interfaces/SignUpData";
-import AuthService from "../utils/auth";
 import { signup } from "../api/authAPI";
-import { useLoggedIn } from "../context/LoggedInContext";
 
 const Signup: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const { setLoggedIn } = useLoggedIn();
+
   const [form, setForm] = useState({
     email: "",
     username: "",
@@ -16,15 +14,13 @@ const Signup: React.FC = () => {
     confirmPass: "",
     bio: "",
   });
+
   const navigate = useNavigate();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -46,15 +42,14 @@ const Signup: React.FC = () => {
     };
 
     try {
-      const data = await signup(newUser);
-      setError("");
-      AuthService.login(data.token);
-      // if successful navigate to login page
-      setLoggedIn(true);
-      navigate("/home");
+      await signup(newUser);
+      console.log("User signed up successfully");
+
+      // Redirect the user to the login page
+      navigate("/login");
     } catch (err) {
       console.error("Signup failed", err);
-      setError("Failed to sign up, please try again");
+      setError("Failed to sign up, please try again.");
     } finally {
       setLoading(false);
     }
@@ -68,67 +63,50 @@ const Signup: React.FC = () => {
           onSubmit={handleSubmit}
           className="max-w-md flex flex-col space-y-4"
         >
-          <div>
-            <label className="block text-lg mb-2">Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="sample@email.com"
-              value={form.email}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border text-color_1 rounded bg-color_2"
-            />
-          </div>
-          <div>
-            <label className="block text-lg mb-2">Username</label>
-            <input
-              type="text"
-              name="username"
-              placeholder="yourUsername"
-              value={form.username}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border text-color_1 rounded bg-color_2"
-            />
-          </div>
-          <div>
-            <label className="block text-lg mb-2">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="password"
-              value={form.password}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border text-color_1 rounded bg-color_2"
-            />
-          </div>
-          <div>
-            <label className="block text-lg mb-2">Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPass"
-              placeholder="re-type password"
-              value={form.confirmPass}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border text-color_1 rounded bg-color_2"
-            />
-          </div>
-          <div>
-            <label className="block text-lg mb-2">
-              Bio (200 characters max)
-            </label>
-            <textarea
-              name="bio"
-              placeholder="tell us a little about yourself"
-              value={form.bio}
-              onChange={handleChange}
-              maxLength={200}
-              className="w-full p-2 border text-color_1 rounded bg-color_2"
-            />
-          </div>
+          <input
+            type="email"
+            name="email"
+            placeholder="sample@email.com"
+            value={form.email}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="text"
+            name="username"
+            placeholder="yourUsername"
+            value={form.username}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="password"
+            value={form.password}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="password"
+            name="confirmPass"
+            placeholder="re-type password"
+            value={form.confirmPass}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          />
+          <textarea
+            name="bio"
+            placeholder="tell us a little about yourself"
+            value={form.bio}
+            onChange={handleChange}
+            maxLength={200}
+            className="w-full p-2 border rounded"
+          />
           {error && <p className="text-white">{error}</p>}
           <button
             type="submit"
@@ -146,5 +124,3 @@ const Signup: React.FC = () => {
 };
 
 export default Signup;
-
-

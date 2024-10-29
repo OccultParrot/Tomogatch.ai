@@ -2,20 +2,18 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "tailwindcss";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    port: 3001,
-    open: true,
+    port: 5173, // Adjusted for Vite dev server
+    open: true, // Automatically open the browser on startup
     proxy: {
       "/api": {
-        target: "http://localhost:3001", // Backend server
-        changeOrigin: true, // Ensure the origin is changed to match the target
-        secure: false, // Use `false` if not using HTTPS locally
+        target: "http://localhost:3001", // Express backend server
+        changeOrigin: true,
+        secure: false, // HTTPS?
       },
       "/auth": {
-        //allowing the client to connect
-        target: "http://localhost:3001",
+        target: "http://localhost:3001", // Proxy auth routes to Express
         changeOrigin: true,
         secure: false,
       },

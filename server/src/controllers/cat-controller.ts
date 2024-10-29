@@ -65,7 +65,13 @@ export const createCat = async (req: Request, res: Response) => {
       isAlive,
       userId,
     });
-    res.status(201).json(cat);
+    // Once the cat is created, we need to update the list of cats in the UI
+    console.log("Cat created successfully!", cat);
+    // I THINK the only place the call will be made will be from the home page
+    // So we can send back the updated list of cats to use as the new state to update the UI
+    const updatedCats = await Cat.findAll({ where: { userId } });
+    // return the updated list of cats that the Home page is awaiting now
+    res.status(201).json(updatedCats);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
