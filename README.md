@@ -121,7 +121,7 @@ This project is a collaborative effort by the following contributors:
 - **Souad**
 
   - GitHub Profile: [souad-hb](#)
-  - Email: [souad@example.com](mailto:souadsalahh@gmail.com)
+  - Email: [souadsalahh@gmail.com](mailto:souadsalahh@gmail.com)
 
 - **Thomas**
 
