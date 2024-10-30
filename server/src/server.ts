@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Serve static files before routes and middleware
-const buildPath = path.join(__dirname, "..", "client", "dist");
+const buildPath = path.join(__dirname, "../..", "client", "dist");
 app.use(express.static(buildPath));
 
 // Allow cross-origin requests from Vite (development mode)

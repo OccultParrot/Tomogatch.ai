@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import {BrowserRouter, } from 'react-router-dom';
 import App from './App.tsx';
 import '/src/index.css';
-import { HistoryProvider } from './context/HistoryContext.tsx';
+// import { HistoryProvider } from './context/HistoryContext.tsx';
 
 
 createRoot(document.getElementById('root')!).render(
@@ -11,9 +11,9 @@ createRoot(document.getElementById('root')!).render(
     {/*<RouterProvider router={router} />*/}
 
     <BrowserRouter>
-    <HistoryProvider>
+    {/*<HistoryProvider>*/}
       <App />
-      </HistoryProvider>
+      {/*</HistoryProvider>*/}
     </BrowserRouter>
   </StrictMode>,
 );
