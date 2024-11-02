@@ -11,6 +11,7 @@ import { createInteraction } from "../api/interactionAPI";
 import { InteractionData } from "../interfaces/InteractionData";
 import { useNookContext } from "../context/NookContext";
 import { CatData } from "../interfaces/CatData";
+import { updateCatData } from "../api/catAPI";
 
 interface Message {
   sender: string;
@@ -32,8 +33,8 @@ export default function Chat() {
       Whiskers: 1,
       Bubbles: 2,
       Shadow: 3,
-      Mittens: 4
-    }
+      Mittens: 4,
+    };
     const name = selectedCat?.name as keyof typeof catNames | undefined;
     const number = name ? catNames[name] : undefined;
 
@@ -41,12 +42,12 @@ export default function Chat() {
       `/assets/cats/cat-0${number}/mood-12.png`,
       `/assets/cats/cat-0${number}/mood-34.png`,
       `/assets/cats/cat-0${number}/mood-56.png`,
-      `/assets/cats/cat-0${number}/mood-78.png`, 
+      `/assets/cats/cat-0${number}/mood-78.png`,
       `/assets/cats/cat-0${number}/mood-910.png`,
-    ]
-    
+    ];
+
     return moodPicArr;
-  }) ;
+  });
 
   const getMoodImage = (mood: number) => {
     if (mood === 1 || mood === 2) {
@@ -60,7 +61,7 @@ export default function Chat() {
     } else if (mood === 9 || mood === 10) {
       return catMoodPics[4];
     } else {
-      return undefined; 
+      return undefined;
     }
   };
 
@@ -150,6 +151,15 @@ export default function Chat() {
         "Timestamp:",
         timestamp
       );
+      const newCatData = { ...catData, mood: newMood };
+      console.log("new catData", newCatData);
+      setCatData(newCatData);
+      try {
+        const updatedCatToDB = await updateCatData(catData.id, newCatData);
+        console.log("Updated Cat Data from DB:", updatedCatToDB);
+      } catch (error) {
+        console.error("Failed to update cat mood on the database:", error);
+      }
     } catch (error) {
       console.error("Error during chat interaction:", error);
     }
@@ -247,13 +257,25 @@ export default function Chat() {
           timestamp
         );
         // Darrio - this is where the pics can be updated
-        setCatData((prev) => ({
-          ...prev,
-          mood: newMood,
-          avatar: getMoodImage(newMood), 
-
-        }) as CatData); // Update the cat data with the new mood and patience
+        setCatData(
+          (prev) =>
+            ({
+              ...prev,
+              mood: newMood,
+              avatar: getMoodImage(newMood),
+            } as CatData)
+        ); // Update the cat data with the new mood and patience
         // could have a catAvatar, setCatAvatar = useState and inject it from there
+
+        const newCatData = { ...catData, mood: newMood };
+        console.log("new catData", newCatData);
+        setCatData(newCatData);
+        try {
+          const updatedCatToDB = await updateCatData(catData.id, newCatData);
+          console.log("Updated Cat Data from DB:", updatedCatToDB);
+        } catch (error) {
+          console.error("Failed to update cat mood on the database:", error);
+        }
       } catch (error) {
         console.error("Error during chat interaction:", error);
       }
