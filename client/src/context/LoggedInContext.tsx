@@ -1,4 +1,4 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from "react";
+import { createContext, Dispatch, type ReactNode, SetStateAction, useContext, useState } from "react";
 
 interface LoggedInContextType {
     loggedIn: boolean | null;
@@ -7,7 +7,7 @@ interface LoggedInContextType {
 
 export const LoggedInContext = createContext<LoggedInContextType | undefined>(undefined);
 
-export const LoggedInProvider = ({ children }: { children: ReactNode }) => {
+export const LoggedInProvider = ({ children }: { children?: ReactNode }) => {
     const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
 
     return (

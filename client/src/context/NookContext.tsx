@@ -1,4 +1,4 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from "react";
+import { createContext, Dispatch, type ReactNode, SetStateAction, useContext, useState } from "react";
 
 interface NookContextType {
     selectedNook: string | null;
@@ -7,7 +7,7 @@ interface NookContextType {
 
 export const NookContext = createContext<NookContextType | undefined>(undefined);
 
-export const NookProvider = ({ children }: { children: ReactNode }) => {
+export const NookProvider = ({ children }: { children?: ReactNode }) => {
     const [selectedNook, setSelectedNook] = useState<string | null>(null);
 
     return (
