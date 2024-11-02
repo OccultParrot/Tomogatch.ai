@@ -69,18 +69,18 @@ const createCat = async (body: CatData) => {
   }
 };
 
-const updateCat = async (
+const updateCatData = async (
   id: number | null,
-  body: CatData
+  newData: CatData
 ): Promise<CatData> => {
   try {
     const response = await fetch(`/api/cats/${id}`, {
+      method: "PUT",
       headers: {
-        method: "PUT",
         "Content-Type": "application/json",
         Authorization: `Bearer ${Auth.getToken()}`,
-        body: JSON.stringify(body),
       },
+      body: JSON.stringify(newData),
     });
     const data = await response.json();
 
@@ -89,7 +89,7 @@ const updateCat = async (
     }
     return data;
   } catch (error) {
-    console.log("Error retrieving data: ", error);
+    console.log("Error updating data: ", error);
     return Promise.reject("Could not update cat");
   }
 };
@@ -114,4 +114,4 @@ const deleteCat = async (id: number | null): Promise<ApiMessage> => {
   }
 };
 
-export { retrieveCats, retrieveCat, createCat, updateCat, deleteCat };
+export { retrieveCats, retrieveCat, createCat, updateCatData, deleteCat };
