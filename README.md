@@ -12,6 +12,21 @@
 
 ---
 
+# Table of Contents
+
+- [Project Description](#project-description)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Setup and Installation](#setup-and-installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Contributors](#contributors)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+- [Future Enhancements](#future-enhancements)
+
+---
+
 ## **Project Description**
 
 **Tomogatch.AI** is a playful, interactive virtual pet app built with **React** on the front end and **Node.js** + **Express** for the backend. The pet dynamically interacts with the user, creating engaging experiences through real-time chat interactions powered by **GPT-based AI**.
