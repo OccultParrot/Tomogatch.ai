@@ -292,7 +292,7 @@ export const getUserCreatedAt = async (req: Request, res: Response) => {
       res.status(404).json("User cant be found");
     }
   } catch (error: any) {
-    res.status(500).json({ message: "This did not work Greg" + error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 // PUT /users/:id/username - update a user's username by id
@@ -343,6 +343,52 @@ export const updateUserBio = async (req: Request, res: Response) => {
       await updatedUser.save();
 
       res.status(200).json({ message: "Bio updated successfully" });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// get /users/:userId/lastLogin - get the last login date of a user
+export const getLastLogin = async (req: Request, res: Response) => {
+  try {
+    const userId = Number(req.query.userId);
+    const user = await User.findByPk(userId);
+
+    if (user) {
+      // Convert `createdAt` to a string in the local time zone
+      const lastLoginDate = new Date(
+        user.get("lastLogin") as Date
+      ).toLocaleString("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      });
+      res.status(200).json(lastLoginDate);
+    } else {
+      res.status(404).json("User cant be found");
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// PUT /users/:id/lastLogin - update a user's last login by id
+export const updateLastLogin = async (req: Request, res: Response) => {
+  try {
+    const updatedUser = await User.findByPk(req.params.id);
+    if (!updatedUser) {
+      res.status(404).json({ message: "User not found" });
+    } else {
+      updatedUser.lastLogin = new Date();
+
+      await updatedUser.save();
+
+      res.status(200).json({ message: "Last login updated successfully" });
     }
   } catch (error: any) {
     res.status(500).json({ message: error.message });

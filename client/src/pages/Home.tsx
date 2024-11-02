@@ -17,6 +17,41 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const [lastLogin, setLastLogin] = useState<Date | null>(null);
+
+  // Function to get last login from db and compare with current login
+  const getLastLogin = async () => {
+    const token = Auth.getToken();
+    const userId = getUserIdFromToken();
+
+    if (!token || !userId) {
+      console.log("Token or user ID not found. Skipping fetch.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `/api/users/lastlogin?userId=${userId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch last login");
+      }
+
+      const lastLogin = await response.json();
+      console.log("Fetched last login:", lastLogin);
+      setLastLogin(new Date(lastLogin));
+    } catch (error) {
+      console.error("Error fetching last login:", error);
+    }
+  }
+
   // Fetch data for the user with updated logging and token handling
   const fetchCatsForUser = useCallback(async () => {
     const token = Auth.getToken();

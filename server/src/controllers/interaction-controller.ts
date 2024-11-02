@@ -137,3 +137,120 @@ export const getLast5Interactions = async (
 // no PUT request needed. I dont think we would be updating an interaction once it's made. at leats it doesnt make sense to me.
 
 // no DELETE request needed, because I dont think it's reasonable to delete an interaction once it's made.
+
+// GET -/interactions/feed/:catId?userId=userId
+export const getFeedInteractions = async (req: Request, res: Response) => {
+  try {
+    const catId = Number(req.query.catId);
+    const userId = Number(req.query.userId);
+
+    if (isNaN(catId) || isNaN(userId)) {
+      res.status(400).json({ message: "Invalid cat or user ID." });
+      return;
+    }
+
+    const feedInteractions = await Interaction.findAll({
+      where: { catId, userId, interactionType: "feed" },
+      include: [
+        {
+          model: User,
+          as: "owner",
+          attributes: ["username"],
+        },
+        {
+          model: Cat,
+          as: "cat",
+          attributes: ["name"],
+        },
+      ],
+    });
+
+    if (feedInteractions.length > 0) {
+      res.status(200).json(feedInteractions);
+    } else {
+      res
+        .status(404)
+        .json({ message: "No feed interactions found for this cat." });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// GET -/interactions/play/:catId?userId=userId
+export const getPlayInteractions = async (req: Request, res: Response) => {
+  try {
+    const catId = Number(req.query.catId);
+    const userId = Number(req.query.userId);
+
+    if (isNaN(catId) || isNaN(userId)) {
+      res.status(400).json({ message: "Invalid cat or user ID." });
+      return;
+    }
+
+    const playInteractions = await Interaction.findAll({
+      where: { catId, userId, interactionType: "play" },
+      include: [
+        {
+          model: User,
+          as: "owner",
+          attributes: ["username"],
+        },
+        {
+          model: Cat,
+          as: "cat",
+          attributes: ["name"],
+        },
+      ],
+    });
+
+    if (playInteractions.length > 0) {
+      res.status(200).json(playInteractions);
+    } else {
+      res
+        .status(404)
+        .json({ message: "No play interactions found for this cat." });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// GET -/interactions/gift/:catId?userId=userId
+export const getGiftInteractions = async (req: Request, res: Response) => {
+  try {
+    const catId = Number(req.query.catId);
+    const userId = Number(req.query.userId);
+
+    if (isNaN(catId) || isNaN(userId)) {
+      res.status(400).json({ message: "Invalid cat or user ID." });
+      return;
+    }
+
+    const giftInteractions = await Interaction.findAll({
+      where: { catId, userId, interactionType: "gift" },
+      include: [
+        {
+          model: User,
+          as: "owner",
+          attributes: ["username"],
+        },
+        {
+          model: Cat,
+          as: "cat",
+          attributes: ["name"],
+        },
+      ],
+    });
+
+    if (giftInteractions.length > 0) {
+      res.status(200).json(giftInteractions);
+    } else {
+      res
+        .status(404)
+        .json({ message: "No gift interactions found for this cat." });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
