@@ -191,6 +191,15 @@ export const createUser = async (req: Request, res: Response) => {
       userRole: "standard", // Default role
       bio,
       yarn: 200, // Default value
+      lastLoginDate: new Date().toLocaleString("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      }),
     });
 
     res.status(201).json(newUser);
@@ -384,7 +393,15 @@ export const updateLastLogin = async (req: Request, res: Response) => {
     if (!updatedUser) {
       res.status(404).json({ message: "User not found" });
     } else {
-      updatedUser.lastLogin = new Date();
+      updatedUser.lastLoginDate = new Date().toLocaleString("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      });
 
       await updatedUser.save();
 

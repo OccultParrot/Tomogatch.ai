@@ -138,8 +138,10 @@ export const getLast5Interactions = async (
 
 // no DELETE request needed, because I dont think it's reasonable to delete an interaction once it's made.
 
+// These can be modified to get all the interactions instead if that is better for the logic, but for now they are returning the last
+// interaction of a certain type for a certain cat.
 // GET -/interactions/feed/:catId?userId=userId
-export const getFeedInteractions = async (req: Request, res: Response) => {
+export const getFeedInteraction = async (req: Request, res: Response) => {
   try {
     const catId = Number(req.query.catId);
     const userId = Number(req.query.userId);
@@ -163,10 +165,12 @@ export const getFeedInteractions = async (req: Request, res: Response) => {
           attributes: ["name"],
         },
       ],
+      order: [["interactionDate", "DESC"]],
+      limit: 1,
     });
 
     if (feedInteractions.length > 0) {
-      res.status(200).json(feedInteractions);
+      res.status(200).json(feedInteractions[0]);
     } else {
       res
         .status(404)
@@ -178,7 +182,7 @@ export const getFeedInteractions = async (req: Request, res: Response) => {
 };
 
 // GET -/interactions/play/:catId?userId=userId
-export const getPlayInteractions = async (req: Request, res: Response) => {
+export const getPlayInteraction = async (req: Request, res: Response) => {
   try {
     const catId = Number(req.query.catId);
     const userId = Number(req.query.userId);
@@ -202,10 +206,12 @@ export const getPlayInteractions = async (req: Request, res: Response) => {
           attributes: ["name"],
         },
       ],
+      order: [["interactionDate", "DESC"]],
+      limit: 1,
     });
 
     if (playInteractions.length > 0) {
-      res.status(200).json(playInteractions);
+      res.status(200).json(playInteractions[0]);
     } else {
       res
         .status(404)
@@ -217,7 +223,7 @@ export const getPlayInteractions = async (req: Request, res: Response) => {
 };
 
 // GET -/interactions/gift/:catId?userId=userId
-export const getGiftInteractions = async (req: Request, res: Response) => {
+export const getGiftInteraction = async (req: Request, res: Response) => {
   try {
     const catId = Number(req.query.catId);
     const userId = Number(req.query.userId);
@@ -241,10 +247,12 @@ export const getGiftInteractions = async (req: Request, res: Response) => {
           attributes: ["name"],
         },
       ],
+      order: [["interactionDate", "DESC"]],
+      limit: 1,
     });
 
     if (giftInteractions.length > 0) {
-      res.status(200).json(giftInteractions);
+      res.status(200).json(giftInteractions[0]);
     } else {
       res
         .status(404)
