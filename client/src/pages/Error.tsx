@@ -1,6 +1,7 @@
+import { FC } from "react";
 // import notFoundImage from "./assets/CatLady.png"; // Cant seem to find the image after building
 
-const ErrorPage: React.FC = () => {
+const ErrorPage: FC = () => {
     return (
         <div className='bg-gray-400 min-h-screen'>
             <img src="assets/other/CatLady.png" alt="Not found, Cat Lady Error image"/>
