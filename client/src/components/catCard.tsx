@@ -18,7 +18,7 @@ const CatCard: React.FC<CatCardProps> = ({ cat, isAvailable, onClick }) => {
       onClick={onClick}
       style={{
         height: "auto",
-        backgroundImage: "linear-gradient(to bottom, #4E5340, #fff7ed)",
+        backgroundImage: "linear-gradient(to top, #fffDDD, #fff7ed)",
       }}
     >
       <img

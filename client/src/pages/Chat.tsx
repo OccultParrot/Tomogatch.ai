@@ -271,7 +271,7 @@ export default function Chat() {
                 avatar: getMoodImage(newMood),
               } as CatData)
           );
-          // Update the cat data with the new mood and patience AND lastFeedDate
+          // Update the cat data in DB with the new mood and patience AND lastFeedDate
           newCatData = {
             ...catData,
             mood: newMood,
@@ -288,12 +288,11 @@ export default function Chat() {
                 avatar: getMoodImage(newMood),
               } as CatData)
           );
-          // Update the cat data with the new mood and patience
+          // Update the cat data with the new mood and patience (this will update the default avatar in the db this way)
           newCatData = { ...catData, mood: newMood, patience: newPatience };
         }
         // Update the cat data with the new mood and patience and lastFeedDate if feed
-        console.log("new catData", newCatData);
-        setCatData(newCatData);
+
         try {
           const updatedCatToDB = await updateCatData(catData.id, newCatData);
           console.log("Updated Cat Data in DB:", updatedCatToDB);
