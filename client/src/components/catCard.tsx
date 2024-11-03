@@ -32,10 +32,10 @@ const CatCard: React.FC<CatCardProps> = ({ cat, isAvailable, onClick }) => {
       ) : (
         <div className="flex flex-col gap-4 w-4/5">
           <p className="w-full text-color_7 bg-color_2 rounded px-4 py-2 border-2 border-color_7">
-            Mood: {cat.mood}
+            <span className="font-bold">Mood:</span> {cat.mood}
           </p>
           <p className="w-full text-color_7 bg-color_2 rounded px-4 py-2 border-2 border-color_7">
-            Last Feeding: {cat.lastFeedDate}
+            <span className="font-bold">Personality:</span> {cat.personality}
           </p>
         </div>
       )}

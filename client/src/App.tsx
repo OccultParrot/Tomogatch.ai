@@ -21,11 +21,11 @@ function Layout() {
     <LoggedInProvider>
       <NookProvider>
         <CatProvider>
-          <div className="flex flex-col bg-gray-800 lg:overflow-hidden lg:h-screen">
+          <div className="flex flex-col bg-gray-800 lg:overflow-hidden h-screen">
             <header className="flex-shrink-0">
               <NavBar />
             </header>
-            <main className="flex-grow lg:overflow-hidden">
+            <main className="flex-grow h-full lg:overflow-hidden">
               {" "}
               <Outlet />
             </main>
