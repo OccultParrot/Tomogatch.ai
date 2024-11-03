@@ -10,8 +10,12 @@ interface CatCardProps {
 const CatCard: React.FC<CatCardProps> = ({ cat, isAvailable, onClick }) => {
   return (
     <div
-      className="border-2 flex flex-col items-center p-4 rounded-lg cursor-pointer"
+      className="border-2 flex flex-col items-center p-4 rounded-lg cursor-pointer avatar-hover"
       onClick={onClick}
+      style={{
+        height: "auto",
+        backgroundImage: "linear-gradient(to bottom, #4E5340, #fff7ed)",
+      }}
     >
       <img
         src={cat.avatar || "./assets/other/adoptMe.png"}
@@ -26,7 +30,9 @@ const CatCard: React.FC<CatCardProps> = ({ cat, isAvailable, onClick }) => {
           Adopt Me
         </button>
       ) : (
-        <p className="w-auto text-gray-900 bg-color_2 rounded m-1 px-4 py-2">Mood: {cat.mood}</p>
+        <p className="w-auto text-gray-900 bg-color_2 rounded m-1 px-4 py-2">
+          Mood: {cat.mood}
+        </p>
       )}
     </div>
   );
