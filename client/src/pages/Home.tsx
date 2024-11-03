@@ -18,6 +18,9 @@ const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [lastLogin, setLastLogin] = useState<string | null>(null);
+  const [timeSinceLogin, setTimeSinceLogin] = useState<string | null>(null);
+  const [bonusYarn, setBonusYarn] = useState<boolean>(false);
+  const [bonusYarnValue, setBonusYarnValue] = useState<number>(0);
 
   // Calculate the days since the last login
   const timeSinceLastLogin = (lastLoginDate: Date) => {
@@ -32,6 +35,10 @@ const Home: React.FC = () => {
     const hours = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((ms % (1000 * 60)) / 1000);
+    setTimeSinceLogin(
+      `The last time you saw your cats was ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds ago.`
+    );
+    setBonusYarnValue(seconds * 10);
     return { days, hours, minutes, seconds };
   };
 
@@ -68,10 +75,27 @@ const Home: React.FC = () => {
         const formattedTime = formatTimeDifference(timeSinceLogin);
 
         console.log(
-          `Last login was ${formattedTime.days} days, ${formattedTime.hours} hours, ${formattedTime.minutes} minutes, and ${formattedTime.seconds} ago.`
+          `Last login was ${formattedTime.days} days, ${formattedTime.hours} hours, ${formattedTime.minutes} minutes, and ${formattedTime.seconds} seconds ago.`
+        );
+        // setLastLogin locally with a string (not a Date like the db)
+        setLastLogin(
+          data.lastLoginDate.toLocaleString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+          })
         );
 
-        setLastLogin(data.lastLoginDate);
+        if (formattedTime.seconds > 12) {
+          console.log(
+            "You've been away for more than 12 hours. Awarding bonus yarn!"
+          );
+          setBonusYarn(true);
+        }
       } else {
         console.log("No previous login date found.");
       }
@@ -180,6 +204,10 @@ const Home: React.FC = () => {
     navigate(`/${cat.name.toLowerCase()}`, { state: { cat } });
   };
 
+  useEffect(() => {
+    console.log(`You have been awarded ${bonusYarnValue} Bonus Yarn!`);
+  }, [bonusYarn, bonusYarnValue]);
+
   return (
     <div className="container mx-auto p-6 bg-color_1 rounded-b-2xl">
       <h1 className="text-2xl font-bold mb-6">Your Adopted Cats</h1>
@@ -206,6 +234,28 @@ const Home: React.FC = () => {
           ))}
         </div>
       )}
+      <div className="flex flex-col font-bold gap-6 p-6">
+        <div className="text-color_2">
+          Last login:{" "}
+          {lastLogin
+            ? new Date(lastLogin).toLocaleString("en-US", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false,
+              })
+            : "Not available"}
+        </div>
+        {timeSinceLogin && <div className="text-color_2">{timeSinceLogin}</div>}
+        {bonusYarn && (
+          <div className="text-color_2">
+            You have been awarded {bonusYarnValue} Bonus Yarn!
+          </div>
+        )}
+      </div>
     </div>
   );
 };
