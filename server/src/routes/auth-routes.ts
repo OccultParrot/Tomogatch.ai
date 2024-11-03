@@ -62,6 +62,7 @@ export const signup = async (req: Request, res: Response): Promise<any> => {
       bio,
       userRole: "standard",
       yarn: 200,
+      lastLoginDate: new Date(),
     });
 
     // generate a JWT token for the user for auto-login after signup -- for greg's sake
@@ -81,6 +82,7 @@ export const signup = async (req: Request, res: Response): Promise<any> => {
         bio: newUser.bio,
         userRole: newUser.userRole,
         yarn: newUser.yarn,
+        lastLoginDate: newUser.lastLoginDate,
       },
       token,
     });

@@ -17,6 +17,103 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const [lastLogin, setLastLogin] = useState<string | null>(null);
+  const [timeSinceLogin, setTimeSinceLogin] = useState<string | null>(null);
+  const [bonusYarn, setBonusYarn] = useState<boolean>(false);
+  const [bonusYarnValue, setBonusYarnValue] = useState<number>(0);
+
+  // Calculate the days since the last login
+  const timeSinceLastLogin = (lastLoginDate: Date) => {
+    const currentDate = new Date();
+    const lastLogin = new Date(lastLoginDate);
+    const differenceInTime = currentDate.getTime() - lastLogin.getTime();
+    return differenceInTime; // in milliseconds
+  };
+  // Helper to format the time difference
+  const formatTimeDifference = (ms: number) => {
+    const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((ms % (1000 * 60)) / 1000);
+    setTimeSinceLogin(
+      `The last time you saw your cats was ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds ago.`
+    );
+    setBonusYarnValue(seconds * 10);
+    return { days, hours, minutes, seconds };
+  };
+
+  // Fetch last login and set the new login time in the database
+  const handleLastLogin = async () => {
+    const token = Auth.getToken();
+    const userId = getUserIdFromToken();
+
+    if (!token || !userId) {
+      console.log("Token or user ID not found. Skipping fetch.");
+      return;
+    }
+
+    try {
+      // Fetch last login date
+      const response = await fetch(`/api/users/${userId}/lastLogin`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch last login");
+      }
+
+      const data = await response.json();
+      console.log("Last login fetched:", data);
+
+      if (data.lastLoginDate) {
+        // Get the days since the last login
+        const timeSinceLogin = timeSinceLastLogin(data.lastLoginDate);
+        console.log("Time since last login:", timeSinceLogin);
+        const formattedTime = formatTimeDifference(timeSinceLogin);
+
+        console.log(
+          `Last login was ${formattedTime.days} days, ${formattedTime.hours} hours, ${formattedTime.minutes} minutes, and ${formattedTime.seconds} seconds ago.`
+        );
+        // setLastLogin locally with a string (not a Date like the db)
+        setLastLogin(
+          data.lastLoginDate.toLocaleString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+          })
+        );
+
+        if (formattedTime.seconds > 12) {
+          console.log(
+            "You've been away for more than 12 hours. Awarding bonus yarn!"
+          );
+          setBonusYarn(true);
+        }
+      } else {
+        console.log("No previous login date found.");
+      }
+
+      // Update the last login date to the current time
+      await fetch(`/api/users/${userId}/lastLogin`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Last login updated successfully");
+    } catch (error) {
+      console.error("Error handling last login:", error);
+    }
+  };
+
   // Fetch data for the user with updated logging and token handling
   const fetchCatsForUser = useCallback(async () => {
     const token = Auth.getToken();
@@ -43,7 +140,7 @@ const Home: React.FC = () => {
       if (!adoptableResponse.ok) {
         throw new Error("Failed to fetch adoptable cats");
       }
- 
+
       const adoptable = await adoptableResponse.json();
       setAdoptableCats(adoptable);
       console.log("Fetched adoptable cats:", adoptable);
@@ -51,6 +148,9 @@ const Home: React.FC = () => {
       const ownedCats = await retrieveUserCats();
       setUserCats(ownedCats);
       console.log("Fetched owned cats:", ownedCats);
+
+      // Handle last login logic
+      await handleLastLogin();
     } catch (error) {
       console.error("Error fetching cats:", error);
     }
@@ -59,7 +159,8 @@ const Home: React.FC = () => {
   // Ensure fetching happens whenever the user state updates
   useEffect(() => {
     console.log("Home mounted or user state changed.");
-    fetchCatsForUser(); // Trigger fetch
+    fetchCatsForUser(); // Trigger fetch and update lastLogin
+    console.log("User last logged in: ", lastLogin);
   }, [user, fetchCatsForUser]);
 
   const handleAdopt = async (cat: CatData) => {
@@ -103,6 +204,10 @@ const Home: React.FC = () => {
     navigate(`/${cat.name.toLowerCase()}`, { state: { cat } });
   };
 
+  useEffect(() => {
+    console.log(`You have been awarded ${bonusYarnValue} Bonus Yarn!`);
+  }, [bonusYarn, bonusYarnValue]);
+
   return (
     <div className="container mx-auto p-6 bg-color_1 rounded-b-2xl">
       <h1 className="text-2xl font-bold mb-6">Your Adopted Cats</h1>
@@ -129,6 +234,28 @@ const Home: React.FC = () => {
           ))}
         </div>
       )}
+      <div className="flex flex-col font-bold gap-6 p-6">
+        <div className="text-color_2">
+          Last login:{" "}
+          {lastLogin
+            ? new Date(lastLogin).toLocaleString("en-US", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false,
+              })
+            : "Not available"}
+        </div>
+        {timeSinceLogin && <div className="text-color_2">{timeSinceLogin}</div>}
+        {bonusYarn && (
+          <div className="text-color_2">
+            You have been awarded {bonusYarnValue} Bonus Yarn!
+          </div>
+        )}
+      </div>
     </div>
   );
 };

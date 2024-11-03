@@ -10,6 +10,7 @@ export const seedUsers = async () => {
       userRole: "standard user",
       bio: "Love cats, and aspiring cat whisperer.",
       yarn: 500,
+      lastLoginDate: new Date("2024-11-03T12:34:56Z"),
     },
     {
       username: "janedoe",
@@ -18,6 +19,7 @@ export const seedUsers = async () => {
       userRole: "admin",
       bio: "Admin of the CatGPT universe.",
       yarn: 1000,
+      lastLoginDate: new Date("2024-11-03T12:34:56Z"),
     },
     {
       username: "catlover99",
@@ -26,6 +28,7 @@ export const seedUsers = async () => {
       userRole: "standard user",
       bio: "Cant stop adopting cats!",
       yarn: 700,
+      lastLoginDate: new Date("2024-11-03T12:34:56Z"),
     },
   ]);
 };

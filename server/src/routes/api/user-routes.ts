@@ -12,7 +12,8 @@ import {
   updateUserBio,
   updateUserPassword,
   updateUserUsername,
-
+  getLastLogin,
+  updateLastLogin,
 } from "../../controllers/user-controller.js";
 
 const router = express.Router();
@@ -52,4 +53,11 @@ router.put("/:id/password", updateUserPassword);
 
 // put /users/:userId/bio -update user bio
 router.put("/:id/bio", updateUserBio);
+
+// get /users/:userId/lastLogin
+router.get("/:id/lastLogin", getLastLogin);
+
+// PUT /users/:id/lastLogin
+router.put("/:id/lastLogin", updateLastLogin);
+
 export { router as userRouter };

@@ -20,6 +20,8 @@ export class User extends Model<
   declare userRole: string; // admin, standard user, etc. for future use if time allows us.
   declare bio?: string;
   declare yarn: number;
+  // Adding lastLogin to the user model
+  declare lastLoginDate: Date;
   // instance method to hash the password
   async setPassword(password: string) {
     const saltRounds = 10;
@@ -82,6 +84,10 @@ export function UserFactory(sequelize: Sequelize) {
         validate: {
           isInt: true,
         },
+      },
+      lastLoginDate: {
+        type: DataTypes.DATE, // Using DATE (or TIMESTAMP if date does not work) for better date handling
+        allowNull: true,
       },
     },
     {
