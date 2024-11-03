@@ -191,15 +191,7 @@ export const createUser = async (req: Request, res: Response) => {
       userRole: "standard", // Default role
       bio,
       yarn: 200, // Default value
-      lastLoginDate: new Date().toLocaleString("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-      }),
+      lastLoginDate: new Date(),
     });
 
     res.status(201).json(newUser);
@@ -361,23 +353,12 @@ export const updateUserBio = async (req: Request, res: Response) => {
 // get /users/:userId/lastLogin - get the last login date of a user
 export const getLastLogin = async (req: Request, res: Response) => {
   try {
-    const userId = Number(req.query.userId);
+    const userId = Number(req.params.id);
     const user = await User.findByPk(userId);
 
     if (user) {
-      // Convert `createdAt` to a string in the local time zone
-      const lastLoginDate = new Date(
-        user.get("lastLogin") as Date
-      ).toLocaleString("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-      });
-      res.status(200).json(lastLoginDate);
+      const lastLoginDate = new Date(user.get("lastLoginDate"));
+      res.status(200).json({ lastLoginDate });
     } else {
       res.status(404).json("User cant be found");
     }
@@ -393,15 +374,7 @@ export const updateLastLogin = async (req: Request, res: Response) => {
     if (!updatedUser) {
       res.status(404).json({ message: "User not found" });
     } else {
-      updatedUser.lastLoginDate = new Date().toLocaleString("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-      });
+      updatedUser.lastLoginDate = new Date(); // Save as Date object
 
       await updatedUser.save();
 

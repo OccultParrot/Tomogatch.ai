@@ -259,6 +259,9 @@ const updateUserBio = async (id: number, newBio: string): Promise<UserData> => {
     return Promise.reject("Could not fetch user by id");
   }
 };
+
+
+
 export {
   retrieveUsers,
   retrieveUser,

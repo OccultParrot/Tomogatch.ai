@@ -17,10 +17,26 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [lastLogin, setLastLogin] = useState<Date | null>(null);
+  const [lastLogin, setLastLogin] = useState<string | null>(null);
 
-  // Function to get last login from db and compare with current login
-  const getLastLogin = async () => {
+  // Calculate the days since the last login
+  const timeSinceLastLogin = (lastLoginDate: Date) => {
+    const currentDate = new Date();
+    const lastLogin = new Date(lastLoginDate);
+    const differenceInTime = currentDate.getTime() - lastLogin.getTime();
+    return differenceInTime; // in milliseconds
+  };
+  // Helper to format the time difference
+  const formatTimeDifference = (ms: number) => {
+    const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((ms % (1000 * 60)) / 1000);
+    return { days, hours, minutes, seconds };
+  };
+
+  // Fetch last login and set the new login time in the database
+  const handleLastLogin = async () => {
     const token = Auth.getToken();
     const userId = getUserIdFromToken();
 
@@ -30,27 +46,49 @@ const Home: React.FC = () => {
     }
 
     try {
-      const response = await fetch(
-        `/api/users/lastlogin?userId=${userId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      // Fetch last login date
+      const response = await fetch(`/api/users/${userId}/lastLogin`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Failed to fetch last login");
       }
 
-      const lastLogin = await response.json();
-      console.log("Fetched last login:", lastLogin);
-      setLastLogin(new Date(lastLogin));
+      const data = await response.json();
+      console.log("Last login fetched:", data);
+
+      if (data.lastLoginDate) {
+        // Get the days since the last login
+        const timeSinceLogin = timeSinceLastLogin(data.lastLoginDate);
+        console.log("Time since last login:", timeSinceLogin);
+        const formattedTime = formatTimeDifference(timeSinceLogin);
+
+        console.log(
+          `Last login was ${formattedTime.days} days, ${formattedTime.hours} hours, ${formattedTime.minutes} minutes, and ${formattedTime.seconds} ago.`
+        );
+
+        setLastLogin(data.lastLoginDate);
+      } else {
+        console.log("No previous login date found.");
+      }
+
+      // Update the last login date to the current time
+      await fetch(`/api/users/${userId}/lastLogin`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Last login updated successfully");
     } catch (error) {
-      console.error("Error fetching last login:", error);
+      console.error("Error handling last login:", error);
     }
-  }
+  };
 
   // Fetch data for the user with updated logging and token handling
   const fetchCatsForUser = useCallback(async () => {
@@ -78,7 +116,7 @@ const Home: React.FC = () => {
       if (!adoptableResponse.ok) {
         throw new Error("Failed to fetch adoptable cats");
       }
- 
+
       const adoptable = await adoptableResponse.json();
       setAdoptableCats(adoptable);
       console.log("Fetched adoptable cats:", adoptable);
@@ -86,6 +124,9 @@ const Home: React.FC = () => {
       const ownedCats = await retrieveUserCats();
       setUserCats(ownedCats);
       console.log("Fetched owned cats:", ownedCats);
+
+      // Handle last login logic
+      await handleLastLogin();
     } catch (error) {
       console.error("Error fetching cats:", error);
     }
@@ -94,7 +135,8 @@ const Home: React.FC = () => {
   // Ensure fetching happens whenever the user state updates
   useEffect(() => {
     console.log("Home mounted or user state changed.");
-    fetchCatsForUser(); // Trigger fetch
+    fetchCatsForUser(); // Trigger fetch and update lastLogin
+    console.log("User last logged in: ", lastLogin);
   }, [user, fetchCatsForUser]);
 
   const handleAdopt = async (cat: CatData) => {
