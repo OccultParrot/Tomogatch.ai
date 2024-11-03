@@ -30,9 +30,14 @@ const CatCard: React.FC<CatCardProps> = ({ cat, isAvailable, onClick }) => {
           Adopt Me
         </button>
       ) : (
-        <p className="w-auto text-gray-900 bg-color_2 rounded m-1 px-4 py-2">
-          Mood: {cat.mood}
-        </p>
+        <div className="flex flex-col gap-4 w-4/5">
+          <p className="w-full text-color_7 bg-color_2 rounded px-4 py-2 border-2 border-color_7">
+            Mood: {cat.mood}
+          </p>
+          <p className="w-full text-color_7 bg-color_2 rounded px-4 py-2 border-2 border-color_7">
+            Last Feeding: {cat.lastFeedDate}
+          </p>
+        </div>
       )}
     </div>
   );
