@@ -12,6 +12,7 @@ import { InteractionData } from "../interfaces/InteractionData";
 import { useNookContext } from "../context/NookContext";
 import { CatData } from "../interfaces/CatData";
 import { updateCatData } from "../api/catAPI";
+import { updateUser } from "../api/userAPI";
 
 interface Message {
   sender: string;
@@ -38,7 +39,7 @@ export default function Chat() {
     const name = selectedCat?.name as keyof typeof catNames | undefined;
     const number = name ? catNames[name] : undefined;
 
-    let moodPicArr = [
+    const moodPicArr = [
       `/assets/cats/cat-0${number}/mood-12.png`,
       `/assets/cats/cat-0${number}/mood-34.png`,
       `/assets/cats/cat-0${number}/mood-56.png`,
@@ -151,7 +152,7 @@ export default function Chat() {
         "Timestamp:",
         timestamp
       );
-      const newCatData = { ...catData, mood: newMood };
+      const newCatData = { ...catData, mood: newMood, patience: newPatience };
       console.log("new catData", newCatData);
       setCatData(newCatData);
       try {
@@ -256,25 +257,57 @@ export default function Chat() {
           "Timestamp:",
           timestamp
         );
-        // Darrio - this is where the pics can be updated
-        setCatData(
-          (prev) =>
-            ({
-              ...prev,
-              mood: newMood,
-              avatar: getMoodImage(newMood),
-            } as CatData)
-        ); // Update the cat data with the new mood and patience
-        // could have a catAvatar, setCatAvatar = useState and inject it from there
 
-        const newCatData = { ...catData, mood: newMood };
+        let newCatData: CatData;
+        // Depending on if interaction was feed, set different catData
+        if (interactionType === "feed") {
+          setCatData(
+            (prev) =>
+              ({
+                ...prev,
+                mood: newMood,
+                patience: newPatience,
+                lastFeedDate: new Date(),
+                avatar: getMoodImage(newMood),
+              } as CatData)
+          );
+          // Update the cat data with the new mood and patience AND lastFeedDate
+          newCatData = {
+            ...catData,
+            mood: newMood,
+            patience: newPatience,
+            lastFeedDate: new Date(),
+          };
+        } else {
+          setCatData(
+            (prev) =>
+              ({
+                ...prev,
+                mood: newMood,
+                patience: newPatience,
+                avatar: getMoodImage(newMood),
+              } as CatData)
+          );
+          // Update the cat data with the new mood and patience
+          newCatData = { ...catData, mood: newMood, patience: newPatience };
+        }
+        // Update the cat data with the new mood and patience and lastFeedDate if feed
         console.log("new catData", newCatData);
         setCatData(newCatData);
         try {
           const updatedCatToDB = await updateCatData(catData.id, newCatData);
-          console.log("Updated Cat Data from DB:", updatedCatToDB);
+          console.log("Updated Cat Data in DB:", updatedCatToDB);
         } catch (error) {
-          console.error("Failed to update cat mood on the database:", error);
+          console.error("Failed to update cat in the database:", error);
+        }
+        // Update the user data with the new yarn
+        console.log("updated user yarn:", updatedUserData.yarn);
+        setUserData(updatedUserData);
+        try {
+          const updatedUserToDB = await updateUser(userId, updatedUserData);
+          console.log("Updated User Data in DB:", updatedUserToDB);
+        } catch (error) {
+          console.error("Failed to update user in the database:", error);
         }
       } catch (error) {
         console.error("Error during chat interaction:", error);
@@ -295,9 +328,9 @@ export default function Chat() {
   console.log("Interactions:", interactions);
 
   return (
-    <div className="flex h-full w-full">
+    <div className="flex h-full w-full flex-col lg:flex-row">
       <div
-        className="flex flex-col w-2/3 p-4 border-r border-r-color_1 relative"
+        className="flex flex-col w-full h-full p-4 border-r border-r-color_1 relative lg:w-2/3"
         style={{
           backgroundImage: `url(${nookPic})`,
           backgroundSize: "cover",
@@ -351,27 +384,31 @@ export default function Chat() {
         </form>
       </div>
 
-      <div className="w-1/3 p-4 bg-color_1 flex flex-col items-center justify-center gap-10">
-        <h2 className="text-xl font-bold text-color_2">Actions</h2>
-        <div>
-          <strong>Yarn available:</strong> {userData?.yarn}
+      <div className="w-full p-4 bg-color_1 flex flex-col items-center justify-center gap-4 lg:w-1/3">
+        <h2 className="text-xl font-bold text-color_2">
+          Use Yarn to cheer your cat up!
+        </h2>
+        <div className="text-color_2 text-lg font-bold">
+          <strong>Yarn available: {userData?.yarn}</strong>
         </div>
-        {/* {interactions.length > 0 && (
+        <div className="flex flex-row gap-10 justify-center items-center lg:flex-col">
+          {/* {interactions.length > 0 && (
           <div>
             {interactions.map((interaction) => {
               return <p>{interaction.description}</p>;
             })}
           </div>
         )} */}
-        {["Play", "Feed", "Gift"].map((action) => (
-          <button
-            key={action}
-            className="w-3/4 px-4 py-2 border-2 rounded-3xl border-color_3 text-2xl text-color_b font-serif font-extrabold bg-color_2 hover:bg-color_4 transition-colors duration-200"
-            onClick={() => handleInteraction(action.toLowerCase())}
-          >
-            {action}
-          </button>
-        ))}
+          {["Play", "Feed", "Gift"].map((action) => (
+            <button
+              key={action}
+              className="px-4 py-2 border-2 rounded-3xl border-color_3 text-2xl text-color_b font-serif font-extrabold bg-color_2 hover:bg-color_4 transition-colors duration-200"
+              onClick={() => handleInteraction(action.toLowerCase())}
+            >
+              {action}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

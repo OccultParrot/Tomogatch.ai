@@ -57,6 +57,8 @@ export const adoptCat = async (req: Request, res: Response): Promise<void> => {
     skin,
     personality,
     mood,
+    patience,
+    lastFeedDate,
     deathFlag,
     isAlive,
     userId,
@@ -71,6 +73,8 @@ export const adoptCat = async (req: Request, res: Response): Promise<void> => {
       skin,
       personality,
       mood,
+      patience: patience? patience: 10, // Default patience value for a new cat
+      lastFeedDate,
       deathFlag,
       isAlive,
       userId, // Associate the cat with the logged-in user

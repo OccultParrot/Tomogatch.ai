@@ -169,7 +169,7 @@ const Profile: React.FC = () => {
             alt="User Avatar"
             className="w-full h-auto rounded-lg shadow-lg mb-4"
           />
-          <div className="p-4 rounded-lg shadow bg-color_2 justify-items-center">
+          <div className="p-4 rounded-lg shadow bg-color_2 items-start">
             <h1 className="text-xl font-semibold">Profile Details</h1>
             <p>
               <strong>User Role:</strong> {userData?.userRole}

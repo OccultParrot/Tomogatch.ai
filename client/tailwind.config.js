@@ -13,6 +13,7 @@ module.exports = {
       color_5: "#B91C1C", // Cornell Red
       color_6: "FFFFFF", // White
       color_7: "000000", // Black
+      color_8: "#d1d5db", // Light Gray
     },
   },
 };

@@ -44,39 +44,62 @@ const Cat: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 bg-color_1 rounded-b-2xl">
-      <div className="flex mb-6">
-        <div className="w-1/4 bg-color_2 rounded-lg p-4 mr-3">
-          <div className="relative flex justify-center mb-4">
-            <img
-              src={cat.avatar}
-              alt={cat.name}
-              className="w-auto max-h-96 object-cover rounded-full"
-            />
-          </div>
-          <div>
-            <h3 className="text-2xl font-semibold mb-2">{cat.name}</h3>
-            <p>
-              <strong>Mood:</strong> {cat.mood}
-            </p>
-            <p>
-              <strong>Patience:</strong> {cat.patience}
-            </p>
-          </div>
-        </div>
-
-        <div className="w-3/4">
-          {/* Current main image */}
+    <div
+      className="container mx-auto p-2 bg-color_1 rounded-b-2xl"
+      style={{ maxHeight: "80vh" }}
+    >
+      <div className="flex flex-col justify-center items-center mb-6 min-w-96">
+        <div className="w-full ">
+          {/* Current main image and cat */}
           <div className="flex justify-center">
+            <div className="bg-color_2 rounded-lg p-4 mr-3 avatar-hover">
+              <div
+                className="relative flex justify-center mb-4 flex-basis-0 rounded-xl"
+                style={{
+                  height: "auto",
+                  backgroundImage:
+                    "linear-gradient(to bottom, #4E5340, #fff7ed)",
+                }}
+              >
+                <img
+                  src={cat.avatar}
+                  alt={cat.name}
+                  className="w-auto max-h-96 object-cover"
+                />
+              </div>
+              <div>
+                <h3 className="text-2xl font-semibold mb-2">{cat.name}</h3>
+                <p>
+                  <strong>Mood:</strong> {cat.mood}
+                </p>
+                <p>
+                  <strong>Patience:</strong> {cat.patience}
+                </p>
+              </div>
+              {/* Chat button */}
+              <div className="mt-4 flex justify-center items-center">
+                <button
+                  className="ml-2 px-4 py-2 bg-color_3 text-white rounded-lg hover:bg-color_5 transition-colors"
+                  onClick={handleChatClick}
+                >
+                  Chat
+                </button>
+              </div>
+            </div>
             <img
               src={currentNook}
               alt="Cat Nook"
-              className="w-1/2 max-h-96 rounded-lg shadow-lg"
+              className="rounded-lg shadow-lg min-h-48 min-w-48 aspect-ratio"
+              style={{
+                aspectRatio: "1:1",
+                objectFit: "cover",
+                maxHeight: "36rem",
+              }}
             />
           </div>
 
           {/* Carousel of thumbnails */}
-          <div className="mt-4 flex space-x-2 overflow-x-auto scrollbar-thin scrollbar-thumb-color_3 scrollbar-track-color_2">
+          <div className="mt-4 flex w-full justify-center items-center space-x-2 overflow-x-auto scrollbar-thin scrollbar-thumb-color_3 scrollbar-track-color_2">
             {carouselNook.map((image, index) => (
               <img
                 key={index}
@@ -86,16 +109,6 @@ const Cat: React.FC = () => {
                 onClick={() => setCurrentNook(image)}
               />
             ))}
-          </div>
-
-          {/* Chat button */}
-          <div className="mt-4 space-x-4">
-            <button
-              className="ml-2 px-4 py-2 bg-color_3 text-white rounded-lg hover:bg-color_5 transition-colors"
-              onClick={handleChatClick}
-            >
-              Chat
-            </button>
           </div>
         </div>
       </div>

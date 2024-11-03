@@ -234,8 +234,8 @@ const Home: React.FC = () => {
           ))}
         </div>
       )}
-      <div className="flex flex-col font-bold gap-6 p-6">
-        <div className="text-color_2">
+      <div className="flex flex-col font-bold gap-6 p-6 mt-6 border-2 border-color_7 rounded-xl bg-color_2">
+        <div className="text-color_7">
           Last login:{" "}
           {lastLogin
             ? new Date(lastLogin).toLocaleString("en-US", {
@@ -249,9 +249,9 @@ const Home: React.FC = () => {
               })
             : "Not available"}
         </div>
-        {timeSinceLogin && <div className="text-color_2">{timeSinceLogin}</div>}
+        {timeSinceLogin && <div className="text-color_7">{timeSinceLogin}</div>}
         {bonusYarn && (
-          <div className="text-color_2">
+          <div className="text-color_7">
             You have been awarded {bonusYarnValue} Bonus Yarn!
           </div>
         )}
