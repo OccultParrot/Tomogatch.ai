@@ -14,6 +14,7 @@ module.exports = {
       color_6: "FFFFFF", // White
       color_7: "000000", // Black
       color_8: "#d1d5db", // Light Gray
+      color_9: "#fef9c3", // Light Yellow
     },
   },
 };

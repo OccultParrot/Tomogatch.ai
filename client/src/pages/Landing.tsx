@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { Image } from "@thatapicompany/thecatapi/dist/types";
 import CatPolaroid from "../components/catPolaroid.tsx";
 // import YarnConnection from "../components/yarnConnection.tsx";
@@ -36,8 +36,8 @@ const Landing = () => {
     const col = index % 2;
 
     // Base position at center of grid cell
-    const baseLeft = 25 + (col * 50); // 25% spacing between columns
-    const baseTop = 20 + (row * 30);  // 20% spacing between rows
+    const baseLeft = 25 + col * 50; // 25% spacing between columns
+    const baseTop = 20 + row * 30; // 20% spacing between rows
 
     // Add controlled randomness within the cell
     const randomOffset = () => (Math.random() - 0.5) * 15; // ±7.5% random offset
@@ -76,7 +76,7 @@ const Landing = () => {
       <img
         src={adoptionBanner}
         alt="Banner - Cat GPT Adoption Board"
-        className="max-w-5xl margin-auto"
+        className="w-3/4 lg:max-w-4xl margin-auto"
       />
       <div className="relative w-full max-w-5xl h-[600px] bg-color_1 rounded-lg -z-20">
         <img

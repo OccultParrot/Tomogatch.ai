@@ -7,10 +7,13 @@ import { useCatContext } from "../context/CatContext";
 import CatCard from "../components/catCard";
 import { getUserIdFromToken } from "../utils/userToken";
 import { useUser } from "../context/UserContext";
+import { retrieveUser } from "../api/userAPI";
+// import { UserData } from "../interfaces/userData";
 
 const Home: React.FC = () => {
   const [adoptableCats, setAdoptableCats] = useState<CatData[]>([]);
   const [userCats, setUserCats] = useState<CatData[]>([]);
+  // const [userData, setUserData] = useState<UserData | null>(null);
   const { setSelectedCat } = useCatContext();
   const { user } = useUser();
 
@@ -21,6 +24,7 @@ const Home: React.FC = () => {
   const [timeSinceLogin, setTimeSinceLogin] = useState<string | null>(null);
   const [bonusYarn, setBonusYarn] = useState<boolean>(false);
   const [bonusYarnValue, setBonusYarnValue] = useState<number>(0);
+  const [currentUserYarnValue, setCurrentUserYarnValue] = useState<number>(0);
 
   // Calculate the days since the last login
   const timeSinceLastLogin = (lastLoginDate: Date) => {
@@ -40,6 +44,25 @@ const Home: React.FC = () => {
     );
     setBonusYarnValue(seconds * 10);
     return { days, hours, minutes, seconds };
+  };
+
+  // get user's current yarn value
+  const getYarn = async () => {
+    const token = Auth.getToken();
+    const userId = getUserIdFromToken();
+
+    if (!token || !userId) {
+      console.log("Token or user ID not found. Skipping fetch.");
+      return;
+    }
+
+    try {
+      const user = await retrieveUser(userId);
+      console.log("User fetched, setting current yarn to :", user.yarn);
+      setCurrentUserYarnValue(user.yarn);
+    } catch (error) {
+      console.error("Error fetching yarn:", error);
+    }
   };
 
   // Fetch last login and set the new login time in the database
@@ -160,6 +183,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     console.log("Home mounted or user state changed.");
     fetchCatsForUser(); // Trigger fetch and update lastLogin
+    getYarn(); // Fetch the current yarn value
     console.log("User last logged in: ", lastLogin);
   }, [user, fetchCatsForUser]);
 
@@ -204,9 +228,58 @@ const Home: React.FC = () => {
     navigate(`/${cat.name.toLowerCase()}`, { state: { cat } });
   };
 
+  const updateYarn = async () => {
+    const token = Auth.getToken();
+    const userId = getUserIdFromToken();
+
+    if (!token || !userId) {
+      console.log("Token or user ID not found. Skipping fetch.");
+      return;
+    }
+    try {
+      const fetchedUser = await retrieveUser(userId);
+      if (!fetchedUser) {
+        console.error("User not found. Skipping bonus yarn award.");
+        return;
+      }
+      console.log("User fetched for bonus yarn:", fetchedUser);
+      const newYarn = fetchedUser.yarn + bonusYarnValue;
+      setCurrentUserYarnValue(newYarn);
+      console.log("New yarn value after bonus:", newYarn);
+
+      // update the user's yarn value in DB with BONUS YARN!
+      try {
+        const response = await fetch(`/api/users/${userId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            ...fetchedUser,
+            yarn: newYarn,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error("Error updating user yarn");
+        }
+
+        console.log("User yarn updated:", data);
+        console.log("User yarn updated successfully");
+      } catch (error) {
+        console.error("Error updating user yarn:", error);
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+  };
+
   useEffect(() => {
-    console.log(`You have been awarded ${bonusYarnValue} Bonus Yarn!`);
-  }, [bonusYarn, bonusYarnValue]);
+    updateYarn();
+  }, [bonusYarn, bonusYarnValue, lastLogin]);
 
   return (
     <div className="container mx-auto p-6 bg-color_1 rounded-b-2xl">
@@ -253,6 +326,11 @@ const Home: React.FC = () => {
         {bonusYarn && (
           <div className="text-color_7">
             You have been awarded {bonusYarnValue} Bonus Yarn!
+          </div>
+        )}
+        {(currentUserYarnValue !== null || undefined) && (
+          <div className="text-color_7">
+            You currently have {currentUserYarnValue} Yarn!
           </div>
         )}
       </div>
