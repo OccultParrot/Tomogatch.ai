@@ -8,6 +8,10 @@ interface CatCardProps {
 }
 
 const CatCard: React.FC<CatCardProps> = ({ cat, isAvailable, onClick }) => {
+  console.log(cat);
+  const lastFeedDateString = cat.lastFeedDate
+    ? new Date(cat.lastFeedDate).toLocaleString()
+    : "";
   return (
     <div
       className="border-2 flex flex-col items-center p-4 rounded-lg cursor-pointer avatar-hover"
@@ -37,18 +41,12 @@ const CatCard: React.FC<CatCardProps> = ({ cat, isAvailable, onClick }) => {
           <p className="w-full text-color_7 bg-color_2 rounded px-4 py-2 border-2 border-color_7">
             <span className="font-bold">Patience:</span> {cat.patience}
           </p>
-          <p className="w-full text-color_7 bg-color_2 rounded px-4 py-2 border-2 border-color_7">
-            <span className="font-bold">Last Feeding:</span>{" "}
-            {cat.lastFeedDate.toLocaleString("en-US", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-              hour12: false,
-            })}
-          </p>
+          {lastFeedDateString && (
+            <p className="w-full text-color_7 bg-color_2 rounded px-4 py-2 border-2 border-color_7">
+              <span className="font-bold">Last Feeding:</span>{" "}
+              {lastFeedDateString}
+            </p>
+          )}
         </div>
       )}
     </div>
