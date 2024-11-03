@@ -35,7 +35,19 @@ const CatCard: React.FC<CatCardProps> = ({ cat, isAvailable, onClick }) => {
             <span className="font-bold">Mood:</span> {cat.mood}
           </p>
           <p className="w-full text-color_7 bg-color_2 rounded px-4 py-2 border-2 border-color_7">
-            <span className="font-bold">Personality:</span> {cat.personality}
+            <span className="font-bold">Patience:</span> {cat.patience}
+          </p>
+          <p className="w-full text-color_7 bg-color_2 rounded px-4 py-2 border-2 border-color_7">
+            <span className="font-bold">Last Feeding:</span>{" "}
+            {cat.lastFeedDate.toLocaleString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: false,
+            })}
           </p>
         </div>
       )}

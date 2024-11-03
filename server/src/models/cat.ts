@@ -20,6 +20,8 @@ export class Cat extends Model<
   declare personality: string; // we are using this to narrow down the user's chatGPT prompts with the cat
   // did not include the createdAt in here, sequelize will create that by itself since timestamps are set to true
   declare mood: number; // this is going to be initialized as unsigned int
+  declare patience: number; // this is going to be initialized as unsigned int
+  declare lastFeedDate: Date | null;
   declare deathFlag: number;
   declare isAlive: boolean;
   declare userId: ForeignKey<User["id"]> | null;
@@ -41,10 +43,9 @@ export function CatFactory(sequelize: Sequelize) {
       avatar: {
         type: DataTypes.STRING,
         allowNull: true,
-        //add default value when no avatar is available
       },
       skin: {
-        type: DataTypes.STRING, // still verify what the skin is for. weird
+        type: DataTypes.STRING,
         allowNull: true,
       },
       personality: {
@@ -55,6 +56,15 @@ export function CatFactory(sequelize: Sequelize) {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         // defaultValue:
+      },
+      patience: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        // defaultValue: 10,
+      },
+      lastFeedDate: {
+        type: DataTypes.DATE,
+        allowNull: true,
       },
       deathFlag: {
         type: DataTypes.INTEGER,

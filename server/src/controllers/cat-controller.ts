@@ -51,6 +51,8 @@ export const createCat = async (req: Request, res: Response) => {
       skin,
       personality,
       mood,
+      patience,
+      lastFeedDate,
       deathFlag,
       isAlive,
       userId,
@@ -61,6 +63,8 @@ export const createCat = async (req: Request, res: Response) => {
       avatar,
       personality,
       mood,
+      patience,
+      lastFeedDate,
       deathFlag,
       isAlive,
       userId,
@@ -86,6 +90,8 @@ export const updateCat = async (req: Request, res: Response) => {
       avatar,
       personality,
       mood,
+      patience,
+      lastFeedDate,
       deathFlag,
       isAlive,
       userId,
@@ -98,7 +104,10 @@ export const updateCat = async (req: Request, res: Response) => {
       cat.avatar = avatar;
       cat.skin = skin;
       cat.personality = personality;
-      (cat.mood = mood), (cat.deathFlag = deathFlag);
+      cat.mood = mood;
+      cat.patience = patience;
+      cat.lastFeedDate = lastFeedDate;
+      cat.deathFlag = deathFlag;
       cat.isAlive = isAlive;
       cat.userId = userId;
       await cat.save();
