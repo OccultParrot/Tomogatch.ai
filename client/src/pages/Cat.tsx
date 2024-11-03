@@ -53,7 +53,14 @@ const Cat: React.FC = () => {
           {/* Current main image and cat */}
           <div className="flex justify-center">
             <div className="bg-color_2 rounded-lg p-4 mr-3 avatar-hover">
-              <div className="relative flex justify-center mb-4 flex-basis-0">
+              <div
+                className="relative flex justify-center mb-4 flex-basis-0 rounded-xl"
+                style={{
+                  height: "auto",
+                  backgroundImage:
+                    "linear-gradient(to bottom, #4E5340, #fff7ed)",
+                }}
+              >
                 <img
                   src={cat.avatar}
                   alt={cat.name}
