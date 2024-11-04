@@ -341,6 +341,12 @@ export default function Chat() {
     }
   };
 
+  const actions = [
+    {action: "Play", cost: "10"},
+    {action: "Feed", cost: "20"},
+    {action: "Gift", cost: "30"}
+  ]
+
   if (!catData) return <p>Loading...</p>;
 
   if (!userData) return <p>Fetching user data...</p>;
@@ -429,10 +435,11 @@ export default function Chat() {
         <h2 className="text-xl font-bold text-color_2">
           Use Yarn to cheer your cat up!
         </h2>
-        <div className="text-color_2 text-lg font-bold">
-          <strong>Yarn available: {userData?.yarn}</strong>
+        <div className="text-color_2 text-xl font-bold flex items-center gap-1">
+          <strong>Yarn available: {userData?.yarn} </strong>
+          <img src="assets/other/yarn-02-icon.png" alt="yarn icon" className="w-7 mt-[3px]"/>
         </div>
-        <div className="flex flex-row gap-10 justify-center items-center lg:flex-col">
+        <div className="flex flex-col gap-2 sm:gap-10 justify-center items-center lg:flex-col">
           {/* {interactions.length > 0 && (
             <div>
               {interactions.map((interaction) => {
@@ -440,13 +447,15 @@ export default function Chat() {
               })}
             </div>
           )} */}
-          {["Play", "Feed", "Gift"].map((action) => (
+          {actions.map((e) => (
             <button
-              key={action}
-              className="px-4 py-2 border-2 rounded-3xl border-color_3 text-2xl text-color_b font-serif font-extrabold bg-color_2 hover:bg-color_4 transition-colors duration-200"
-              onClick={() => handleInteraction(action.toLowerCase())}
+              key={e.action}
+              className="flex items-center gap-1 px-4 py-2 border-2 rounded-3xl border-color_3 text-2xl text-color_b font-serif font-extrabold bg-color_2 hover:bg-color_4 transition-colors duration-200"
+              onClick={() => handleInteraction(e.action.toLowerCase())}
             >
-              {action}
+              {e.action}:
+              <span className="text-color_3 text-3xl"> {e.cost} </span>
+              <img src="assets/other/yarn-02-icon.png" alt="yarn icon" className="w-7 mt-[1px]"/>
             </button>
           ))}
         </div>

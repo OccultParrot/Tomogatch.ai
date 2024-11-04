@@ -45,8 +45,7 @@ const Cat: React.FC = () => {
 
   return (
     <div
-      className="container mx-auto p-2 bg-color_1 rounded-b-2xl"
-      style={{ maxHeight: "80vh" }}
+      className="container p-2 bg-color_1 rounded-b-2xl flex flex-row"
     >
       <div className="flex flex-col justify-center items-center mb-6 min-w-96">
         <div className="w-full">

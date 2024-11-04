@@ -164,11 +164,18 @@ const Profile: React.FC = () => {
     <div className="container mx-auto p-6 rounded-lg bg-color_1">
       <div className="md:flex md:space-x-6">
         <div className="w-full md:w-1/3 mb-6 md:mb-0">
-          <img
-            src={randomUserImage}
-            alt="User Avatar"
-            className="w-full h-auto rounded-lg shadow-lg mb-4"
-          />
+          <div className="rounded-lg"
+              style={{
+                height: "auto",
+                backgroundImage:
+                  "linear-gradient(to top, #4E5340, #fff7ed)",
+              }}>
+            <img
+              src={randomUserImage}
+              alt="User Avatar"
+              className="w-full h-auto rounded-lg shadow-lg mb-4"
+            />
+          </div>
           <div className="p-4 rounded-lg shadow bg-color_2 items-start">
             <h1 className="text-xl font-semibold">Profile Details</h1>
             <p>
@@ -195,22 +202,22 @@ const Profile: React.FC = () => {
             </p>
           </div>
 
-          <div className="space-x-0 space-y-4 md:space-y-4 md:space-x-4">
+          <div className="flex flex-col sm:flex-row space-y-4 md:space-y-0 md:space-x-4">
             <button
               onClick={() => openModal("password")}
-              className="px-4 py-2 bg-color_3 rounded-lg hover:bg-color_5 transition-colors"
+              className="flex-1 px-4 py-2 bg-color_3 rounded-lg hover:bg-color_5 transition-colors"
             >
               Change Password
             </button>
             <button
               onClick={() => openModal("bio")}
-              className="px-4 py-2 bg-color_3 rounded-lg hover:bg-color_5 transition-colors"
+              className="flex-1 px-4 py-2 bg-color_3 rounded-lg hover:bg-color_5 transition-colors"
             >
               Change Bio
             </button>
             <button
               onClick={() => openModal("username")}
-              className="px-4 py-2 bg-color_3 rounded-lg hover:bg-color_5 transition-colors"
+              className="flex-1 px-4 py-2 bg-color_3 rounded-lg hover:bg-color_5 transition-colors"
             >
               Change Username
             </button>

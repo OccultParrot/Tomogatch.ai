@@ -49,7 +49,7 @@ function App() {
           {/* Page that shows all your cats */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/:catName" element={<Cat />} />
-          <Route path="" element={<Error />} />
+          <Route path="*" element={<Error />} />
         </Route>
       </Routes>
     </UserProvider>

@@ -124,16 +124,6 @@ const Home: React.FC = () => {
           );
           setBonusYarn(true);
         }
-        if (formattedTime.days > 6) {
-          console.log(
-            "YOUR CATS ARE DEAD! YOU MONSTER! LOOK AT THOSE EMPTY BOXES"
-          );
-          // const killTheCats (id) => {
-          //   set the user's cats to dead in the database, deathFlag = true, mood = 0 and patience = 0, and yarn = 0, and lastLogin = null, etc
-          //   navigate to a new page that shows the user their dead cat(s)?
-          // }
-          // setTimeout(() => {go to the home page again after seeing the graveyard}, 5000);??
-        }
       } else {
         console.log("No previous login date found.");
       }
@@ -297,7 +287,7 @@ const Home: React.FC = () => {
   }, [bonusYarn, bonusYarnValue, lastLogin]);
 
   return (
-    <div className="container mx-auto p-6 bg-color_1 rounded-b-2xl">
+    <div className="container mx-auto p-6 bg-color_1">
       <h1 className="text-2xl font-bold mb-6">Your Adopted Cats</h1>
 
       {isLoading ? (
