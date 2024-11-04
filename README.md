@@ -30,10 +30,6 @@
 
 ---
 
-Here is an enhanced version of your **Project Description** section with improved language and clearer details:
-
----
-
 ## **Project Description**
 
 **Tomogatch.AI** is an engaging and interactive virtual pet application developed using **React** for the client-side interface and **Node.js** + **Express** for the server. This unique platform allows users to build relationships with their AI-powered pets through real-time chat interactions, powered by **GPT-based AI**.
