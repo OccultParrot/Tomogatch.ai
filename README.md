@@ -147,20 +147,48 @@ Follow these steps to get the application running on your local machine:
 
 ## **Project Structure**
 
+The `Tomogatch.ai` project is organized as follows:
+
 ```
 Tomogatch.ai/
-├── client/                 # React frontend
-├── server/                 # Express backend
-│   ├── controllers/        # API request handlers
-|   |-- templates/          # Prompt Templating
-|   |-- middleware/         # JWT Authentication
-|   |-- seeds/              # Seed data for testing db
-│   ├── models/             # SQL database models
-│   ├── routes/             # API endpoints
-│   └── templates/          # Custom prompt templates for GPT
-├── .env                    # Environment variables
-├── package.json            # Project dependencies
-└── README.md               # Project documentation
+├── client/                  # React frontend
+│   ├── src/
+│   │   ├── api/             # API functions for frontend requests
+│   │   ├── components/      # Reusable UI components
+│   │   ├── context/         # React Context for state management
+│   │   ├── interfaces/      # TypeScript interfaces for type safety
+│   │   ├── pages/           # React pages for routing
+│   │   │   ├── Cat.tsx
+│   │   │   ├── Chat.tsx
+│   │   │   ├── Error.tsx
+│   │   │   ├── Home.tsx
+│   │   │   ├── Landing.tsx
+│   │   │   ├── Login.tsx
+│   │   │   ├── Profile.tsx
+│   │   │   ├── signup.tsx
+│   │   │   └── welcome.tsx
+│   │   ├── utils/           # Utility functions
+│   │   ├── App.tsx
+│   │   ├── index.css
+│   │   ├── index.tsx
+│   │   ├── main.tsx
+│   │   ├── react-app-env.d.ts
+│   │   └── vite-env.d.ts
+│   ├── public/              # Public assets for the client - Includes all images
+│   ├── dist/
+│   └── .env                 # Environment variable for CATApi - landing page photos
+│
+├── server/                  # Express backend
+│   ├── controllers/         # API request handlers
+│   ├── middleware/          # Middleware functions
+│   ├── models/              # SQL database models
+│   ├── routes/              # API routes
+│   ├── seeds/               # Seed data for testing
+│   ├── templates/           # Custom prompt templates for GPT
+│   ├── .env                 # Environment variables
+│
+├── package.json             # Project dependencies and render scripts
+└── README.md                # Project documentation
 ```
 
 ---
