@@ -43,11 +43,14 @@ function NavBar() {
     navigate("/Profile");
   };
 
+  const mainLogo = "/assets/other/logo.png";
+  const loggedInLogo = "/assets/other/cat-GPT-icon.png"
+
     return (
         <nav className="bg-color_2 w-full flex p-4 top-0 left-0">
             <div className="container mx-auto flex justify-between items-center">
                 <Link to='/' className="flex items-center space-x-2">
-                    <img src="assets/other/logo.png" alt="Cat Logo" className="h-10 w-30"/>
+                    <img src={loggedIn ? loggedInLogo : mainLogo} alt="Cat Logo" className="h-10 w-30"/>
                 </Link>
                 <div>
                     {loggedIn ? (

@@ -24,7 +24,8 @@ function CatPolaroid(props: Props) {
         key={props.index}
         src={props.photoURL}
         alt={`Cat`}
-        className="absolute w-40 h-40 object-cover rounded shadow-lg bg-color_2"
+        className="absolute w-32 h-32 object-cover rounded shadow-lg bg-color_2
+                    sm:w-36 sm:h-36 md:h-40 md:w-40"
         style={{
           transform: `rotate(${randomRotation()}deg)`,
           top: props.topPercent,

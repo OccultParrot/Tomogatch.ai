@@ -76,7 +76,7 @@ const Landing = () => {
       <img
         src={adoptionBanner}
         alt="Banner - Cat GPT Adoption Board"
-        className="w-3/4 lg:max-w-4xl margin-auto"
+        className="w-auto lg:max-w-4xl margin-auto"
       />
       <div className="relative w-full max-w-5xl h-[600px] bg-color_1 rounded-lg -z-20">
         <img
