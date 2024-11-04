@@ -14,26 +14,54 @@
 
 # Table of Contents
 
-- [Project Description](#project-description)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Setup and Installation](#setup-and-installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Contributors](#contributors)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
-- [Future Enhancements](#future-enhancements)
+- [**Tomogatch.AI** 🐾](#tomogatchai-)
+- [Table of Contents](#table-of-contents)
+  - [**Project Description**](#project-description)
+  - [**Screenshots**](#screenshots)
+  - [**Features**](#features)
+  - [**Technologies Used**](#technologies-used)
+  - [**Setup and Installation**](#setup-and-installation)
+  - [**Usage**](#usage)
+  - [**Project Structure**](#project-structure)
+  - [**Contributors**](#contributors)
+  - [**License**](#license)
+  - [**Acknowledgments**](#acknowledgments)
+  - [**Future Enhancements**](#future-enhancements)
+
+---
+
+Here is an enhanced version of your **Project Description** section with improved language and clearer details:
 
 ---
 
 ## **Project Description**
 
-**Tomogatch.AI** is a playful, interactive virtual pet app built with **React** on the front end and **Node.js** + **Express** for the backend. The pet dynamically interacts with the user, creating engaging experiences through real-time chat interactions powered by **GPT-based AI**.
+**Tomogatch.AI** is an engaging and interactive virtual pet application developed using **React** for the client-side interface and **Node.js** + **Express** for the server. This unique platform allows users to build relationships with their AI-powered pets through real-time chat interactions, powered by **GPT-based AI**.
 
-The virtual pet adapts over time based on **user interactions**, evolving its responses and behaviors. While the **local chat history** is managed on the client side to minimize latency, summaries are periodically stored in a **SQL database** for long-term memory and continuity across sessions.
+The virtual pet evolves over time based on user interactions, offering a personalized and dynamic user experience. User activities are stored in a **document database**, which compiles interaction summaries to provide context for the **OpenAI API**, enriching the conversation with relevant background information.
 
-This project is designed to evolve over time, ensuring its functionality grows with user feedback and expanding capabilities.
+When users create an account, they receive an initial allotment of virtual currency (yarn). Yarn can be spent on activities to feed and play with their AI pets, adding a gamified element to the experience. The **SQL database** tracks users’ yarn balance, manages bonuses for returning users, and logs expenditures via the server's API endpoints, enhancing engagement and continuity when users visit different parts of the app.
+
+This project is designed with scalability and user feedback in mind, allowing for continuous evolution and feature expansion.
+
+---
+
+## **Screenshots**
+
+- **Landing Page**:
+  ![Landing Page](./documentation/assets/landingpage-01.png)
+
+- **Home Page**:
+  ![Homepage](./documentation/assets/homepage-01.png)
+
+- **Cat Profile Page**:
+  ![Cat Page](./documentation/assets/catpage-01.png)
+
+- **Chat with Whiskers**:
+  ![Chat with Whiskers](./documentation/assets/chat-with-whiskers-01.png)
+
+- **Chat with Whiskers - Mobile**:
+  ![Chat with Whiskers - Mobile](./documentation/assets/chat-with-whiskers-02.png)
 
 ---
 
@@ -127,7 +155,6 @@ Tomogatch.ai/
 ## **Contributors**
 
 This project is a collaborative effort by the following contributors:
-
 
 <table>
   <tr>
