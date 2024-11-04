@@ -124,6 +124,16 @@ const Home: React.FC = () => {
           );
           setBonusYarn(true);
         }
+        if (formattedTime.days > 6) {
+          console.log(
+            "YOUR CATS ARE DEAD! YOU MONSTER! LOOK AT THOSE EMPTY BOXES"
+          );
+          // const killTheCats (id) => {
+          //   set the user's cats to dead in the database, deathFlag = true, mood = 0 and patience = 0, and yarn = 0, and lastLogin = null, etc
+          //   navigate to a new page that shows the user their dead cat(s)?
+          // }
+          // setTimeout(() => {go to the home page again after seeing the graveyard}, 5000);??
+        }
       } else {
         console.log("No previous login date found.");
       }
