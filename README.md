@@ -30,10 +30,6 @@
 
 ---
 
-Here is an enhanced version of your **Project Description** section with improved language and clearer details:
-
----
-
 ## **Project Description**
 
 **Tomogatch.AI** is an engaging and interactive virtual pet application developed using **React** for the client-side interface and **Node.js** + **Express** for the server. This unique platform allows users to build relationships with their AI-powered pets through real-time chat interactions, powered by **GPT-based AI**.
@@ -68,9 +64,9 @@ This project is designed with scalability and user feedback in mind, allowing fo
 ## **Features**
 
 - **Real-time chat interactions** with a virtual pet.
-- **Context-aware responses** leveraging AI-backed logic.
-- **Persistent memory** using SQL for long-term engagement.
-- **Client-side chat management** with periodic memory synchronization.
+- **Context-aware responses** leveraging AI-backed logic and document database.
+- **Persistent memory** using SQL for long-term engagement and data accuracy when injected into prompts.
+- **Client-side chat management** with interaction-based memory synchronization.
 - **Interactive UI** built with React for a seamless user experience.
 - **Full-stack deployment** on Render for easy accessibility.
 
@@ -81,7 +77,7 @@ This project is designed with scalability and user feedback in mind, allowing fo
 - **Backend**: Node.js, Express.js
 - **Frontend**: React, TypeScript
 - **Database**: SQL-based storage (e.g., PostgreSQL)
-- **AI Integration**: OpenAI GPT model
+- **AI Integration**: OpenAI GPT model 3.5-turbo (cost effective)
 - **Deployment**: Render
 - **Version Control**: GitHub
 
@@ -110,16 +106,33 @@ Follow these steps to get the application running on your local machine:
    ```
    OPENAI_API_KEY=<your-openai-api-key>
    DATABASE_URL=<your-database-url>
+
+   The remaining env variables for the project can be found in the .env.example file.
+
    ```
 
-4. **Run the Application**
+4. **Run the Application - Locally**
+
+   First seed the db with the seed script in the /server:
 
    ```bash
-   npm run start
+   npm run render:start
+   ```
+
+   In the project root dir:
+
+   ```bash
+   npm run render:start
+   ```
+
+   Then open an additional terminal in the /client folder to allow vite to serve as your local proxy on 5173:
+
+   ```bash
+   npm run dev
    ```
 
 5. **Access the App**  
-   Open your browser and navigate to `http://localhost:3001`.
+   Open your browser and navigate to `http://localhost:5173`.
 
 ---
 
@@ -214,6 +227,6 @@ Special thanks to all contributors and the open-source community for their tools
 ## **Future Enhancements**
 
 - **Gamification**: Introduce more interactions like toys, rewards, and challenges.
-- **Advanced Memory Management**: Implement smarter AI with enhanced memory capabilities.
+- **Advanced Memory Management**: Implement more uses of various AI models with enhanced memory and capabilities.
 - **Push Notifications**: Alert users when the pet needs attention.
 - **Mobile App**: Expand the application to mobile platforms.
