@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, FormEvent, useRef } from "react";
 import Auth from "../utils/auth";
 import { useCatContext } from "../context/CatContext";
 import { UserData } from "../interfaces/userData";
@@ -29,6 +29,17 @@ export default function Chat() {
   const [catData, setCatData] = useState(selectedCat || null);
   const [interaction, setInteraction] = useState<InteractionData | null>(null);
   const [interactions, setInteractions] = useState<InteractionData[]>([]);
+  const [interactionImage, setInteractionImage] = useState<string | null>(null);
+  const chatContainerRef = useRef<HTMLDivElement | null>(null); // Create a ref for the chat container
+  const [interactionImages] = useState(() => {
+    const interactionImages = {
+      play: "./assets/other/toy-01.png",
+      feed: "./assets/other/food-01.png",
+      gift: "./assets/other/gift-01.png",
+      null: null,
+    };
+    return interactionImages;
+  });
   const [catMoodPics] = useState(() => {
     const catNames = {
       Whiskers: 1,
@@ -49,6 +60,14 @@ export default function Chat() {
 
     return moodPicArr;
   });
+
+  useEffect(() => {
+    // Scroll to the bottom of the chat container when messages change
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]); // Updates when messages come in
 
   const getMoodImage = (mood: number) => {
     if (mood === 1 || mood === 2) {
@@ -165,6 +184,7 @@ export default function Chat() {
       console.error("Error during chat interaction:", error);
     }
 
+    setInteractionImage(null);
     setInput("");
   };
 
@@ -181,6 +201,11 @@ export default function Chat() {
       const data = await createInteraction(interactionType, catData.id!);
 
       setInteraction(data);
+      console.log(
+        "Setting interaction image:",
+        interactionImages[interactionType]
+      );
+      setInteractionImage(interactionImages[interactionType]);
 
       console.log("Interaction:", interaction);
 
@@ -336,13 +361,30 @@ export default function Chat() {
           backgroundPosition: "center",
         }}
       >
+        <div className="floating-image-container">
+          {/* interaction image overlay */}
+          {interactionImage && (
+            <img
+              src={interactionImage}
+              alt="Interaction"
+              className="floating-image absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-36"
+            />
+          )}
+        </div>
+
         <h1 className="text-3xl font-bold text-color_2 underline underline-offset-4 bg-color_1 text-center rounded-md p-2 shadow-2xl shadow-color_4 mb-4">
           Chat with {catData.name}
         </h1>
 
         {/* Chat Messages */}
 
-        <div className="flex-grow overflow-y-auto p-4 space-y-4">
+        <div
+          className="flex-grow overflow-y-auto p-4 space-y-4"
+          ref={chatContainerRef}
+        >
+          {" "}
+          {/* Attach the ref to the chat container to update the window when new
+          messages come in */}
           {messages.map((msg, index) => (
             <div
               key={index}
@@ -392,12 +434,12 @@ export default function Chat() {
         </div>
         <div className="flex flex-row gap-10 justify-center items-center lg:flex-col">
           {/* {interactions.length > 0 && (
-          <div>
-            {interactions.map((interaction) => {
-              return <p>{interaction.description}</p>;
-            })}
-          </div>
-        )} */}
+            <div>
+              {interactions.map((interaction) => {
+                return <p>{interaction.description}</p>;
+              })}
+            </div>
+          )} */}
           {["Play", "Feed", "Gift"].map((action) => (
             <button
               key={action}

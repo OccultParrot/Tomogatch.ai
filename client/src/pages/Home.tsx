@@ -42,7 +42,12 @@ const Home: React.FC = () => {
     setTimeSinceLogin(
       `The last time you saw your cats was ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds ago.`
     );
-    setBonusYarnValue(seconds * 10);
+    // 150 yarn per day per user max - 10 yarn per hour away
+    if (hours * 10 < 150) {
+      setBonusYarnValue(hours * 10);
+    } else {
+      setBonusYarnValue(150);
+    } // 200 max bonus yarn per day
     return { days, hours, minutes, seconds };
   };
 
@@ -113,7 +118,7 @@ const Home: React.FC = () => {
           })
         );
 
-        if (formattedTime.seconds > 12) {
+        if (formattedTime.hours > 12) {
           console.log(
             "You've been away for more than 12 hours. Awarding bonus yarn!"
           );
@@ -330,7 +335,12 @@ const Home: React.FC = () => {
         )}
         {(currentUserYarnValue !== null || undefined) && (
           <div className="text-color_7">
-            You currently have {currentUserYarnValue} Yarn!
+            You currently have{" "}
+            <span className="font-bold text-xl underline">
+              {" "}
+              {currentUserYarnValue} Yarn
+            </span>
+            ! Log in daily to earn more!
           </div>
         )}
       </div>
