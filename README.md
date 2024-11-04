@@ -14,16 +14,18 @@
 
 # Table of Contents
 
-- [Project Description](#project-description)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Setup and Installation](#setup-and-installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Contributors](#contributors)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
-- [Future Enhancements](#future-enhancements)
+- [**Tomogatch.AI** 🐾](#tomogatchai-)
+- [Table of Contents](#table-of-contents)
+  - [**Project Description**](#project-description)
+  - [**Features**](#features)
+  - [**Technologies Used**](#technologies-used)
+  - [**Setup and Installation**](#setup-and-installation)
+  - [**Usage**](#usage)
+  - [**Project Structure**](#project-structure)
+  - [**Contributors**](#contributors)
+  - [**License**](#license)
+  - [**Acknowledgments**](#acknowledgments)
+  - [**Future Enhancements**](#future-enhancements)
 
 ---
 
@@ -34,6 +36,16 @@
 The virtual pet adapts over time based on **user interactions**, evolving its responses and behaviors. While the **local chat history** is managed on the client side to minimize latency, summaries are periodically stored in a **SQL database** for long-term memory and continuity across sessions.
 
 This project is designed to evolve over time, ensuring its functionality grows with user feedback and expanding capabilities.
+
+![Landing Page]('./documentation/assets/landingpage-01.png')
+
+![Homepage]('./documentation/assets/homepage-01.png')
+
+![Cat Page]('./documentation/assets/catpage-01.png')
+
+![Chat with Whiskers]('./documentation/assets/chat-with-whiskers-01.png)
+
+![Chat with Whiskers - Mobile]('./documentation/assets/chat-with-whiskers-02.png)
 
 ---
 
@@ -127,7 +139,6 @@ Tomogatch.ai/
 ## **Contributors**
 
 This project is a collaborative effort by the following contributors:
-
 
 <table>
   <tr>
