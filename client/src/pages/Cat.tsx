@@ -49,12 +49,12 @@ const Cat: React.FC = () => {
       style={{ maxHeight: "80vh" }}
     >
       <div className="flex flex-col justify-center items-center mb-6 min-w-96">
-        <div className="w-full ">
+        <div className="w-full">
           {/* Current main image and cat */}
           <div className="flex justify-center">
-            <div className="bg-color_2 rounded-lg p-4 mr-3 avatar-hover">
+            <div className="bg-color_2 rounded-lg p-4 mr-3 border-2 border-color_7">
               <div
-                className="relative flex justify-center mb-4 flex-basis-0 rounded-xl"
+                className="relative flex justify-center mb-4 flex-basis-1 rounded-xl"
                 style={{
                   height: "auto",
                   backgroundImage:
@@ -64,7 +64,7 @@ const Cat: React.FC = () => {
                 <img
                   src={cat.avatar}
                   alt={cat.name}
-                  className="w-auto max-h-96 object-cover"
+                  className="w-auto max-h-96 object-cover floating-image"
                 />
               </div>
               <div>

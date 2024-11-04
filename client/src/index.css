@@ -4,9 +4,16 @@
 
 .avatar-hover {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-y: auto;
 }
 
 .avatar-hover:hover {
-  transform: scale(1.05); /* Slightly enlarge the avatar */
+  transform: scale(1.1); /* Slightly enlarge the avatar */
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.7); /* Add shadow on hover */
+}
+
+/* Interaction Image */
+.floating-image {
+  min-width: 150px;
+  height: auto;
 }
