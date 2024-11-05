@@ -437,9 +437,9 @@ export default function Chat() {
         </h2>
         <div className="text-color_2 text-xl font-bold flex items-center gap-1">
           <strong>Yarn available: {userData?.yarn} </strong>
-          <img src="assets/other/yarn-02-icon.png" alt="yarn icon" className="w-7 mt-[3px]"/>
+          <img src="assets/other/yarn-02-icon.png" alt="yarn icon" className="w-5 sm:w-7 mt-[3px]"/>
         </div>
-        <div className="flex flex-col gap-2 sm:gap-10 justify-center items-center lg:flex-col">
+        <div className="flex flex-row gap-2 sm:gap-10 justify-center items-center lg:flex-col">
           {/* {interactions.length > 0 && (
             <div>
               {interactions.map((interaction) => {
@@ -450,12 +450,14 @@ export default function Chat() {
           {actions.map((e) => (
             <button
               key={e.action}
-              className="flex items-center gap-1 px-4 py-2 border-2 rounded-3xl border-color_3 text-2xl text-color_b font-serif font-extrabold bg-color_2 hover:bg-color_4 transition-colors duration-200"
+              className="flex items-center gap-1 px-2 py-1 sm:px-4 border-2 rounded-3xl border-color_3 
+                        text-lg sm:text-2xl text-color_b font-serif font-extrabold bg-color_2 hover:bg-color_4 
+                        transition-colors duration-200"
               onClick={() => handleInteraction(e.action.toLowerCase())}
             >
               {e.action}:
-              <span className="text-color_3 text-3xl"> {e.cost} </span>
-              <img src="assets/other/yarn-02-icon.png" alt="yarn icon" className="w-7 mt-[1px]"/>
+              <span className="text-color_3 text-xl sm:text-3xl"> {e.cost} </span>
+              <img src="assets/other/yarn-02-icon.png" alt="yarn icon" className="w-4 sm:w-7 mt-[1px]"/>
             </button>
           ))}
         </div>
