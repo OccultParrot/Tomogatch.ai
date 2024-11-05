@@ -64,9 +64,9 @@ This project is designed with scalability and user feedback in mind, allowing fo
 ## **Features**
 
 - **Real-time chat interactions** with a virtual pet.
-- **Context-aware responses** leveraging AI-backed logic.
-- **Persistent memory** using SQL for long-term engagement.
-- **Client-side chat management** with periodic memory synchronization.
+- **Context-aware responses** leveraging AI-backed logic and document database.
+- **Persistent memory** using SQL for long-term engagement and data accuracy when injected into prompts.
+- **Client-side chat management** with interaction-based memory synchronization.
 - **Interactive UI** built with React for a seamless user experience.
 - **Full-stack deployment** on Render for easy accessibility.
 
@@ -77,7 +77,7 @@ This project is designed with scalability and user feedback in mind, allowing fo
 - **Backend**: Node.js, Express.js
 - **Frontend**: React, TypeScript
 - **Database**: SQL-based storage (e.g., PostgreSQL)
-- **AI Integration**: OpenAI GPT model
+- **AI Integration**: OpenAI GPT model 3.5-turbo (cost effective)
 - **Deployment**: Render
 - **Version Control**: GitHub
 
@@ -106,16 +106,33 @@ Follow these steps to get the application running on your local machine:
    ```
    OPENAI_API_KEY=<your-openai-api-key>
    DATABASE_URL=<your-database-url>
+
+   The remaining env variables for the project can be found in the .env.example file.
+
    ```
 
-4. **Run the Application**
+4. **Run the Application - Locally**
+
+   First seed the db with the seed script in the /server:
 
    ```bash
-   npm run start
+   npm run render:start
+   ```
+
+   In the project root dir:
+
+   ```bash
+   npm run render:start
+   ```
+
+   Then open an additional terminal in the /client folder to allow vite to serve as your local proxy on 5173:
+
+   ```bash
+   npm run dev
    ```
 
 5. **Access the App**  
-   Open your browser and navigate to `http://localhost:3001`.
+   Open your browser and navigate to `http://localhost:5173`.
 
 ---
 
@@ -130,20 +147,48 @@ Follow these steps to get the application running on your local machine:
 
 ## **Project Structure**
 
+The `Tomogatch.ai` project is organized as follows:
+
 ```
 Tomogatch.ai/
-├── client/                 # React frontend
-├── server/                 # Express backend
-│   ├── controllers/        # API request handlers
-|   |-- templates/          # Prompt Templating
-|   |-- middleware/         # JWT Authentication
-|   |-- seeds/              # Seed data for testing db
-│   ├── models/             # SQL database models
-│   ├── routes/             # API endpoints
-│   └── templates/          # Custom prompt templates for GPT
-├── .env                    # Environment variables
-├── package.json            # Project dependencies
-└── README.md               # Project documentation
+├── client/                  # React frontend
+│   ├── src/
+│   │   ├── api/             # API functions for frontend requests
+│   │   ├── components/      # Reusable UI components
+│   │   ├── context/         # React Context for state management
+│   │   ├── interfaces/      # TypeScript interfaces for type safety
+│   │   ├── pages/           # React pages for routing
+│   │   │   ├── Cat.tsx
+│   │   │   ├── Chat.tsx
+│   │   │   ├── Error.tsx
+│   │   │   ├── Home.tsx
+│   │   │   ├── Landing.tsx
+│   │   │   ├── Login.tsx
+│   │   │   ├── Profile.tsx
+│   │   │   ├── signup.tsx
+│   │   │   └── welcome.tsx
+│   │   ├── utils/           # Utility functions
+│   │   ├── App.tsx
+│   │   ├── index.css
+│   │   ├── index.tsx
+│   │   ├── main.tsx
+│   │   ├── react-app-env.d.ts
+│   │   └── vite-env.d.ts
+│   ├── public/              # Public assets for the client - Includes all images
+│   ├── dist/
+│   └── .env                 # Environment variable for CATApi - landing page photos
+│
+├── server/                  # Express backend
+│   ├── controllers/         # API request handlers
+│   ├── middleware/          # Middleware functions
+│   ├── models/              # SQL database models
+│   ├── routes/              # API routes
+│   ├── seeds/               # Seed data for testing
+│   ├── templates/           # Custom prompt templates for GPT
+│   ├── .env                 # Environment variables
+│
+├── package.json             # Project dependencies and render scripts
+└── README.md                # Project documentation
 ```
 
 ---
@@ -210,6 +255,6 @@ Special thanks to all contributors and the open-source community for their tools
 ## **Future Enhancements**
 
 - **Gamification**: Introduce more interactions like toys, rewards, and challenges.
-- **Advanced Memory Management**: Implement smarter AI with enhanced memory capabilities.
+- **Advanced Memory Management**: Implement more uses of various AI models with enhanced memory and capabilities.
 - **Push Notifications**: Alert users when the pet needs attention.
 - **Mobile App**: Expand the application to mobile platforms.
