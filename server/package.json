@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc && npm run copy-js",
     "copy-js": "copyfiles src/controllers/langchain-controller.js dist/controllers",
-    "start": "npm run build && npm run seed && node dist/server.js --ignore client",
+    "start": "npm run build && node dist/server.js --ignore client",
     "seed": "node dist/seeds/index.js"
   },
   "keywords": [],
